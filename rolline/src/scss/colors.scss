@@ -1,0 +1,41 @@
+/* ///// DARK THEME ////// */
+
+$r-color-primary: #E34A4ADB;
+$r-color-secondary: #F3F3F3;
+$r-color-tertiary: #4d4ae3db;
+
+$r-color-light01:#F7F7F7;
+$r-color-light02: #f1f1f3db;
+$r-color-light03: #ebebeedb;
+$r-color-light04: #d7d4e2db;
+
+$r-color-dark01:#24242b;
+$r-color-dark02: #3b3b50db;
+$r-color-dark03: #6b6b85db;
+$r-color-dark04: #918ba5db;
+
+/* //// LAYERS ///// */
+$r-layer-background: #1c1c1f;
+$r-layer-01dp: rgba(255, 255, 255, .05);
+$r-layer-02dp: rgba(255, 255, 255, .07);
+$r-layer-03dp: rgba(255, 255, 255, .08);
+$r-layer-04dp: rgba(255, 255, 255, .09);
+$r-layer-06dp: rgba(255, 255, 255, .11);
+$r-layer-08dp: rgba(255, 255, 255, .12);
+$r-layer-12dp: rgba(255, 255, 255, .14);
+$r-layer-16dp: rgba(255, 255, 255, .15);
+$r-layer-24dp: rgba(255, 255, 255, .16);
+
+/* //// SHADOWS ///// */
+$r-shadow-02dp: 0 0 8px 1px rgba(0,0,0,.12);
+$r-shadow-04dp: 0 0 8px 2px rgba(0,0,0,.16);
+$r-shadow-06dp: 0 0 8px 2px rgba(0,0,0,.18);
+$r-shadow-08dp: 0 0 8px 2px rgba(0,0,0,.22);
+$r-shadow-09dp: 0 0 8px 2px rgba(0,0,0,.28);
+$r-shadow-10dp: 0 0 8px 2px rgba(0,0,0,.32);
+$r-shadow-14dp: 0 0 8px 2px rgba(0,0,0,.54);
+
+/* special shadows */
+$r-shadow-primary: 0 0 8px 1px rgba(227, 74, 74, 0.6);
+$r-shadow-secondary: 0 0 8px 1px rgb(243, 243, 243, .5);
+$r-shadow-tertiary: 0 0 8px 1px rgba(77, 74, 227, 0.6);

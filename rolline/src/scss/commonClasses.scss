@@ -1,0 +1,186 @@
+.disable{
+    opacity: .5;
+}
+
+.hidden {
+    display: none;
+}
+
+.alert{
+    font-size: .9em;
+    color:$r-color-primary;
+    font-weight:300;
+}
+
+/* colors specs */
+.primary {
+    background-color: $r-color-primary;
+    box-shadow: $r-shadow-primary;
+}
+
+.secondary {
+    background-color: $r-color-secondary;
+    box-shadow: $r-shadow-secondary;
+}
+
+.tertiary {
+    background-color: $r-color-tertiary;
+    box-shadow: $r-shadow-tertiary;
+}
+
+
+
+
+/////* layers *//////
+.layer01dp{
+    position:relative;
+    background-color: $r-layer-01dp;
+
+    &::before{
+        content: ' ';
+        position: absolute;
+        z-index: -1;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-color: $r-layer-background;
+        border-radius: inherit;
+    }
+}
+
+.layer02dp{
+    position:relative;
+    background-color: $r-layer-02dp;
+
+    &::before{
+        content: ' ';
+        position: absolute;
+        z-index: -1;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-color: $r-layer-background;
+        border-radius: inherit;
+    }
+}
+
+.layer03dp{
+    position:relative;
+    background-color: $r-layer-03dp;
+
+    &::before{
+        content: ' ';
+        position: absolute;
+        z-index: -1;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-color: $r-layer-background;
+        border-radius: inherit;
+    }
+}
+
+.layer04dp{
+    position:relative;
+    background-color: $r-layer-04dp;
+
+    &::before{
+        content: ' ';
+        position: absolute;
+        z-index: -1;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-color: $r-layer-background;
+        border-radius: inherit;
+    }
+}
+
+.layer06dp{
+    position:relative;
+    background-color: $r-layer-06dp;
+
+    &::before{
+        content: ' ';
+        position: absolute;
+        z-index: -1;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-color: $r-layer-background;
+        border-radius: inherit;
+    }
+}
+
+.layer08dp{
+    position:relative;
+    background-color: $r-layer-08dp;
+
+    &::before{
+        content: ' ';
+        position: absolute;
+        z-index: -1;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-color: $r-layer-background;
+        border-radius: inherit;
+    }
+}
+
+.layer12dp{
+    position:relative;
+    background-color: $r-layer-12dp;
+
+    &::before{
+        content: ' ';
+        position: absolute;
+        z-index: -1;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-color: $r-layer-background;
+        border-radius: inherit;
+    }
+}
+
+.layer16dp{
+    position:relative;
+    background-color: $r-layer-16dp;
+
+    &::before{
+        content: ' ';
+        position: absolute;
+        z-index: -1;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-color: $r-layer-background;
+        border-radius: inherit;
+    }
+}
+
+.layer24dp{
+    position:relative;
+    background-color: $r-layer-24dp;
+
+    &::before{
+        content: ' ';
+        position: absolute;
+        z-index: -1;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-color: $r-layer-background;
+        border-radius: inherit;
+    }
+}
