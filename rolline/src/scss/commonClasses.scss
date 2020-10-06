@@ -35,6 +35,7 @@
 .layer01dp{
     position:relative;
     background-color: $r-layer-01dp;
+    box-shadow: $r-shadow-02dp;
 
     &::before{
         content: ' ';
@@ -52,6 +53,7 @@
 .layer02dp{
     position:relative;
     background-color: $r-layer-02dp;
+    box-shadow: $r-shadow-02dp;
 
     &::before{
         content: ' ';
@@ -69,6 +71,7 @@
 .layer03dp{
     position:relative;
     background-color: $r-layer-03dp;
+    box-shadow: $r-shadow-02dp;
 
     &::before{
         content: ' ';
@@ -86,6 +89,7 @@
 .layer04dp{
     position:relative;
     background-color: $r-layer-04dp;
+    box-shadow: $r-shadow-04dp;
 
     &::before{
         content: ' ';
@@ -103,6 +107,7 @@
 .layer06dp{
     position:relative;
     background-color: $r-layer-06dp;
+    box-shadow: $r-shadow-06dp;
 
     &::before{
         content: ' ';
@@ -120,6 +125,7 @@
 .layer08dp{
     position:relative;
     background-color: $r-layer-08dp;
+    box-shadow: $r-shadow-08dp;
 
     &::before{
         content: ' ';
@@ -137,6 +143,7 @@
 .layer12dp{
     position:relative;
     background-color: $r-layer-12dp;
+    box-shadow: $r-shadow-12dp;
 
     &::before{
         content: ' ';

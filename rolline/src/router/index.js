@@ -6,12 +6,34 @@ Vue.use(VueRouter)
 const routes =  [
   {
     path: '/',
-    name: 'layout',
+    name: 'Home',
+    component: () => import( '../layer/layoutWebsite.vue'),
+    children:[
+      {
+        path: 'parties',
+        name: 'Parties',
+        component: () => import( '../views/Parties.vue')
+      },
+      {
+        path: 'community',
+        name: 'Community',
+        component: () => import( '../views/Community.vue')
+      },
+      {
+        path: 'connexion',
+        name: 'Connexion',
+        component: () => import( '../views/Connexion.vue')
+      },
+    ]
+  },
+  {
+    path: '/game',
+    name: 'Game',
     component: () => import( '../layer/layoutGameBoard.vue')
   },
   {
     path: '/home',
-    name: 'Home',
+    name: 'test',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.

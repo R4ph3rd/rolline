@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="layoutGameboard">
     <div class="gameboard">
         <!-- <vue-router></vue-router> -->
         <v-button ></v-button>
@@ -22,7 +22,7 @@ components: {
 </script>
 
 <style >
-#app{
+.layoutGameboard{
     display:grid;
     width:100vw;
     height:100vh;
