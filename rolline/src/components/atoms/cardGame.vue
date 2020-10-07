@@ -7,7 +7,7 @@
       </ul>
 
       <ul class="players">
-          <li v-for="player in players" :key="player"></li>
+          <li v-for="player in players" :key="player">{{player}}</li>
       </ul>
   </div>
 </template>
@@ -21,11 +21,11 @@ export default {
             required: true,
         },
         tags:{
-            type: Array,
+            type: [Array, Object],
             required: true,
         },
         players: {
-            type:Array,
+            type:[Array, Object],
             required: true
         }
     }
@@ -45,6 +45,8 @@ export default {
         padding:20px;
         border-radius:8px;
 
+        background: url('https://source.unsplash.com/random/400x300');
+
         h3{
             font-weight:700;
             font-size:1.1em;
@@ -60,6 +62,7 @@ export default {
                 font-weight:300;
                 font-size:.96em;
                 color: $r-color-light05;  
+                text-transform: capitalize;
             }
         }
 
