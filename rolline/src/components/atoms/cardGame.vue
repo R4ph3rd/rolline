@@ -1,5 +1,5 @@
 <template>
-  <div class="cardGame layer02dp">
+  <div class="cardGame layer02dp" @click="testGet()">
       <h3>{{title}}</h3>
 
       <ul class="tags">
