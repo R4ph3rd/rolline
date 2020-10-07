@@ -8,10 +8,10 @@
               <router-link to="parties" >Parties</router-link>
           </li>
           <li>
-              <router-link to="community" :class="routeActive == 'community' ? 'active' : ''">Communauté</router-link>
+              <router-link to="community">Communauté</router-link>
           </li>
           <li>
-              <router-link to="connexion" :class="routeActive == 'connexion' ? 'active' : ''">Connexion</router-link>
+              <router-link to="connexion" >Connexion</router-link>
           </li>
       </ul>
   </div>
@@ -41,10 +41,6 @@ export default {
         toggleClasses(){
             if(this.reveal)
             return this.scrollDirection && this.scrollTop > 0 ? 'hiddenSlide' : ''
-        },
-        routeActive(){
-            console.log(this.$route.path.split('/')[1])
-            return this.$route.path.split('/')[1];
         }
     },
     methods:{

@@ -1,0 +1,5 @@
+export default {
+    userState:{
+        token: ''
+    }
+}
