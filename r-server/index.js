@@ -2,6 +2,7 @@ const Hapi = require('@hapi/hapi');
 require('dotenv').config();
 
 const userQueries = require('./db/queries/user');
+const gameQueries = require('./db/queries/game');
 
 const init = async () => {
     const server = Hapi.server({
@@ -15,6 +16,7 @@ const init = async () => {
     await server.start();
     console.log('Server running on %s', server.info.uri)
 
+    //////// USERS ///////////
     server.route({
         method: 'GET',
         path: '/user/{user?}',
@@ -39,6 +41,32 @@ const init = async () => {
             await userQueries.createUser({mail: request.payload.mail, password: request.payload.password, discord_id: request.payload.discord_id});
             console.log('Insertion made')
             return 'Insertion made !';
+        }
+    })
+
+    //////////// GAMES /////////
+    server.route({
+        method: 'GET',
+        path: '/game/{id?}',
+        handler: async (request, h) => {
+            if (request.params.game_id){
+                let game = await gameQueries.getGame({id: request.params.game_id});
+                return {data: game};
+            } else {
+                return {data: await userQueries.getGames()};
+            }
+        }
+    })
+
+    server.route({
+        method: 'POST',
+        path: '/game',
+        // headers: {"Access-Control-Allow-Origin": "*"},
+        handler: async (request, h) => {
+            console.log(request, h)
+            await userQueries.creatGame({name: request.payload.name, tags: request.payload.tags});
+            console.log('Insertion of new game made')
+            return 'Insertion of new game made !';
         }
     })
 }

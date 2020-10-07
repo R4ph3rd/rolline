@@ -7,7 +7,8 @@ import axios from 'axios'
 
 const urls = {
   user : 'http://localhost:5050/user',
-  userConnect: 'http://localhost:5050/user_connect'
+  userConnect: 'http://localhost:5050/user_connect',
+  game:'http://localhost:5050/game',
 }
 
 Vue.use(Vuex)
@@ -50,6 +51,22 @@ const actions = {
   },
   getUsers(context, payload){
     return axios(urls.user).then( function(response){
+      return response.data ;
+    })
+    .catch( function(err){
+      console.error(err)
+    })
+  },
+  getGames(context, payload){
+    return axios(urls.game).then( function(response){
+      return response.data ;
+    })
+    .catch( function(err){
+      console.error(err)
+    })
+  },
+  getGame(context, payload){
+    return axios(urls.game + '/' + payload).then( function(response){
       return response.data ;
     })
     .catch( function(err){
