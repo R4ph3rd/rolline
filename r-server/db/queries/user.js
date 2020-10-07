@@ -23,10 +23,15 @@ const createUser = async ({mail = '', password = '', discord_id = ''}) => {
     await db.insert({'mail': mail, 'password': password, 'discord_id': discord_id}).into('users');
 }
 
+const userConnexion = async({mail = '', password = ''} = {}) => {
+  return await db.select().from('users').where({'mail': mail, 'password' : password});
+}
+
 module.exports = {
     getUsers,
     getUser,
-    createUser
+    createUser,
+    userConnexion
 }
 
 
