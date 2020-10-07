@@ -27,7 +27,8 @@ module.exports = [
         method: 'POST',
         path: '/user_connect',
         handler: async (request, h) => {
-            return await userQueries.userConnexion({mail: request.query.mail, password: request.query.password}).then( rep => {
+            console.log(request)
+            return await userQueries.userConnexion({mail: request.payload.mail, password: request.payload.password}).then( rep => {
                 console.log(rep.length)
                 if (rep.length == 0){
                     return {
