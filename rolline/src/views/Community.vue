@@ -1,16 +1,21 @@
 <template>
   <div class="community">
-
+    <v-grid cols="6" rowHeight="120">
+      <incremental-input v-for="i in 6" :key="'inc-' + i" name="input1"/>
+    </v-grid>
   </div>
 </template>
 
 <script>
+import incrementalInput from '../components/atoms/incrementalInput'
 import grid from '../components/molecules/grid'
 
 export default {
   name: 'Home',
   components: {
     'v-grid': grid,
+    'incremental-input': incrementalInput
+    
   },
   data(){
     return {

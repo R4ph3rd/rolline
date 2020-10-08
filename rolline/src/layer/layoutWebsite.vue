@@ -20,7 +20,7 @@ export default {
 .layout{
     display:grid;
     width:100vw;
-    height:200vh;
+    height:max-content;
     /* background: $r-layer; */
     padding-top:130px;
     padding-left:10%;

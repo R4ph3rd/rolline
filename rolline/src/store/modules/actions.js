@@ -46,6 +46,14 @@ export default{
             console.error(err)
         })
     },
+    getEnrolledGames(context, payload){
+        return axios(urls.game, {limit : 2}).then( function(response){
+            return response.data ;
+        })
+        .catch( function(err){
+            console.error(err)
+        })
+    },
     getGame(context, payload){
         return axios(urls.game + '/' + payload).then( function(response){
             return response.data ;

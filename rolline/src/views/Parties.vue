@@ -1,33 +1,68 @@
 <template>
   <div class="parties">
-    <v-grid :cols="4" :cards="games"></v-grid>
+    <section v-if="!isConnected" class="enrolled_parties">
+      <h2>Parties en cours</h2>
+      <v-grid :cols="4" :cards="enrolled_games">
+        <card-game 
+        v-for="(card, i) in enrolled_games" :key="'card-' + i"
+        :title="card.title"
+        :tags="card.tags"
+        :players="card.players"
+        :cover="card.cover"
+        ></card-game>
+      </v-grid>
+    </section>
+
+    <section class="public_parties">
+      <h2>Des histoires qui n'attendent que toi, aventurier !</h2>
+      <v-grid :cols="4" :cards="public_games">
+        <card-game 
+        v-for="(card, i) in public_games" :key="'card-' + i"
+        :title="card.title"
+        :tags="card.tags"
+        :players="card.players"
+        :cover="card.cover"
+        ></card-game>
+      </v-grid>
+    </section>
   </div>
 </template>
 
 <script>
 import grid from '../components/molecules/grid'
-import {mapActions} from 'vuex'
+import cardGame from '@/components/atoms/cardGame'
+
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: 'Home',
   components: {
     'v-grid': grid,
+    'card-game': cardGame
   },
   data(){
     return {
-      games: []
+      public_games: [],
+      enrolled_games: []
+    }
+  },
+  computed:{
+    ...mapGetters(['getToken']),
+    isConnected(){
+      return this.getToken == (undefined || '');
     }
   },
   methods:{
     ...mapActions({
       getGames: 'getGames',
+      getEnrolledGames: 'getEnrolledGames',
       getGame: 'getGame'
     }),
     generateGamesData(){
       this.getGames().then (response => {
         response.data.forEach(gameData => {
           this.getGame(gameData.id).then(rep => {
-            this.games.push({
+            this.public_games.push({
               title: rep.data.game_infos[0].name,
               tags: Object.values(rep.data.game_tags[0]),
               players: rep.data.game_users_id,
@@ -36,6 +71,21 @@ export default {
           })
         })
       })
+
+      if (this.isConnected){
+        this.getEnrolledGames().then (response => {
+        response.data.forEach(gameData => {
+          this.getGame(gameData.id).then(rep => {
+            this.enrolled_games.push({
+              title: rep.data.game_infos[0].name,
+              tags: Object.values(rep.data.game_tags[0]),
+              players: rep.data.game_users_id,
+              cover: rep.data.game_infos[0].cover
+            })
+          })
+        })
+      })
+      }
     }
   },
   mounted(){
@@ -48,5 +98,9 @@ export default {
 .parties{
   width:100%;
   height:100%;
+
+  section{
+    margin-bottom:130px;
+  }
 }
 </style>

@@ -1,29 +1,18 @@
 <template>
-  <div class="grid" :class="styleGrid">
-      <card-game 
-        v-for="(card, i) in cards" :key="'card-' + i"
-        :title="card.title"
-        :tags="card.tags"
-        :players="card.players"
-        :cover="card.cover"
-        ></card-game>
+  <div class="grid" :class="styleGrid" :style="paramsGrid">
+        <slot></slot>
   </div>
 </template>
 
 <script>
-import cardGame from '@/components/atoms/cardGame'
-
 export default {
     name: 'Grid',
-    components: {
-        'card-game': cardGame
-    },
     props: {
-        cards:{
-            type: Array,
-            required:true
-        },
         cols:{
+            type: [Number, String],
+            required: false
+        },
+        rowHeight:{
             type: [Number, String],
             required: false
         }
@@ -33,6 +22,14 @@ export default {
             if(this.cols){
                 return 'cols-' + this.cols
             }
+        },
+        paramsGrid(){
+            let params = '';
+            if(this.rowHeight){
+                params += 'grid-auto-rows:' + this.rowHeight + 'px'; 
+            }
+
+            return params;
         }
     }
 }
@@ -52,6 +49,12 @@ export default {
         
         &.cols-4{
             grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+        &.cols-5{
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        }
+        &.cols-6{
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         }
     }
 </style>
