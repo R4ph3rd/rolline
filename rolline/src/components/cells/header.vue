@@ -1,6 +1,6 @@
 <template>
   <div class="header" :class="toggleClasses">
-      <div class="logo"></div>
+      <div class="logo" @click="clearLocalStorage()"></div>
       <v-spacer></v-spacer>
 
       <ul class="nav">
@@ -20,7 +20,7 @@
 
 <script>
 import spacer from '@/components/atoms/spacer'
-import {mapGetters} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
     name: 'Header',
@@ -51,6 +51,9 @@ export default {
         }
     },
     methods:{
+        ...mapActions({
+            clearLocalStorage: 'clearLocalStorage'
+        }),
         handleScroll(e){
             if(e.srcElement.scrollingElement.scrollTop > this.scrollTop){
                 if(!this.scrollDirection){

@@ -56,5 +56,15 @@ export default{
     },
     setToken(context, payload){
         context.payload('setToken', payload);
+    },
+    clearLocalStorage(context, payload){
+        context.commit('clearLocalStorage');
     }
+    /*setToken(context, payload){
+        context.commit('setToken', response.data)
+    },
+    clearLocalStorage(context, payload){
+        context.commit('clearLocalStorage');
+    }
+    */
 }

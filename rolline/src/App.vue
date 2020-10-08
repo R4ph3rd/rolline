@@ -3,7 +3,19 @@
     <router-view/>
 </div>
 </template>
-
+<script>
+import {mapActions} from 'vuex'
+export default {
+  methods:{
+    ...mapActions({
+      initializeUserState : 'initializeUserState'
+    })
+  },
+  beforeCreate(){
+    this.$store.commit('initializeUserState');
+  }
+}
+</script>
 <style lang="scss">
 *{
   box-sizing: border-box;

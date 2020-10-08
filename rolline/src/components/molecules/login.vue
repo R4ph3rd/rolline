@@ -14,16 +14,13 @@
 import button from '../atoms/button'
 import input from '../atoms/input'
 
-import {mapGetters, mapActions} from 'vuex'
+import {mapActions} from 'vuex'
 
 export default {
     name: 'Login',
     components: {
         'v-button': button,
         'v-input': input
-    },
-    computed:{
-        ...mapGetters(['getToken'])
     },
     methods: {
         ...mapActions({
