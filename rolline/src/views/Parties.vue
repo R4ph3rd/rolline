@@ -27,7 +27,6 @@ export default {
       this.getGames().then (response => {
         response.data.forEach(gameData => {
           this.getGame(gameData.id).then(rep => {
-            console.log(rep.data)
             this.games.push({
               title: rep.data.game_infos[0].name,
               tags: Object.values(rep.data.game_tags[0]),

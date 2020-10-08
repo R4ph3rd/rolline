@@ -24,6 +24,11 @@ const routes =  [
         name: 'Connexion',
         component: () => import( '../views/Connexion.vue')
       },
+      {
+        path: 'profile',
+        name: 'Profile',
+        component: () => import( '../views/Profile.vue')
+      },
     ]
   },
   {

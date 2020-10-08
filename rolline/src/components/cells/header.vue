@@ -11,7 +11,8 @@
               <router-link to="community">Communauté</router-link>
           </li>
           <li>
-              <router-link to="connexion" >Connexion</router-link>
+              <router-link v-if="isConnected" to="connexion" >Connexion</router-link>
+              <router-link v-else to="profile" >Profil</router-link>
           </li>
       </ul>
   </div>
@@ -19,6 +20,8 @@
 
 <script>
 import spacer from '@/components/atoms/spacer'
+import {mapGetters} from 'vuex'
+
 export default {
     name: 'Header',
     props:{
@@ -38,9 +41,13 @@ export default {
         'v-spacer' : spacer
     },
     computed:{
+        ...mapGetters(['getToken']),
         toggleClasses(){
             if(this.reveal)
             return this.scrollDirection && this.scrollTop > 0 ? 'hiddenSlide' : ''
+        },
+        isConnected(){
+            return this.getToken == (undefined || '');
         }
     },
     methods:{
@@ -61,7 +68,7 @@ export default {
     },
     destroyed () {
         window.removeEventListener('scroll', this.handleScroll);
-    },
+    }
 }
 </script>
 

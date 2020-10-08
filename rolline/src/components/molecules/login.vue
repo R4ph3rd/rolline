@@ -36,8 +36,22 @@ export default {
                 password: this.$el.children[3].children[0].value
             }).then( (rep) => {
                 console.log(rep)
+                if(rep.token){
+                    this.$router.push('/profile');
+                }
             })
+        },
+        keyPressed(e){
+            if(e.key === 'Enter'){
+                this.connectUser();
+            }
         }
+    },
+    created () {
+        window.addEventListener('keypress', this.keyPressed);
+    },
+    destroyed () {
+        window.removeEventListener('scroll', this.keyPressed);
     }
 }
 </script>
