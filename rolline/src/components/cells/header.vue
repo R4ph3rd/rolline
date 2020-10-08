@@ -78,7 +78,7 @@ export default {
 
     display:flex;
     align-items: center;
-    background: #16161d;
+    background: $r-gradient-dark;
     box-shadow: $r-shadow-08dp;
 
     transition: .3s ease-in;

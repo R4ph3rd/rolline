@@ -1,5 +1,5 @@
 <template>
-  <div class="cardGame layer02dp" @click="testGet()">
+  <div class="cardGame layer02dp" @click="testGet()" :style="`background: url('${cover});`">
       <h3>{{title}}</h3>
 
       <ul class="tags">
@@ -27,6 +27,11 @@ export default {
         players: {
             type:[Array, Object],
             required: true
+        },
+        cover:{
+            type: String,
+            // default: () => 'https://source.unsplash.com/random/400x300',
+            required:false
         }
     }
 }
@@ -45,7 +50,10 @@ export default {
         padding:20px;
         border-radius:8px;
 
-        background: url('https://source.unsplash.com/random/400x300');
+        background-position: center !important;
+        background-size:cover !important;
+        background-repeat: no-repeat;
+
 
         h3{
             font-weight:700;

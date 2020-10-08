@@ -1,5 +1,5 @@
 export default {
-    getToken(){
-        return StaticRange.userState.token;
+    getToken(state){
+        return state.userState.token;
     }
 }

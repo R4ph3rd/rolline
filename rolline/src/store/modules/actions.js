@@ -8,13 +8,13 @@ const urls = {
 
 export default{
     connect(context, payload){
-        axios.post(userConnect, {
-            username: payload.username,
+        return axios.post(urls.userConnect, {
+            mail: payload.mail,
             password: payload.password
         })
         .then( response => {
-            console.log(response)
-            context.commit('connect', response)
+            context.commit('setToken', response.data)
+            return response.data;
         })
         .catch( (err) => {
             console.warn('Couldn"t connect to the server : ', err)

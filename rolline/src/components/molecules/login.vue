@@ -1,12 +1,12 @@
 <template>
   <div class="layer04dp login">
-      <label for="name">Nom d'aventurier</label>
-      <v-input name="name">Provencal le Gaulois</v-input>
+      <label for="name">Adresse pour hiboux électroniques</label>
+      <v-input name="name">Provencal@legaulois.com</v-input>
 
       <label for="mdp">Mot de passe d'aventurier</label>
       <v-input password name="mdp">ghq7k!</v-input>
 
-      <v-button class="primary">Connect</v-button>
+      <v-button class="primary" @click.native="connectUser()">Connect</v-button>
   </div>
 </template>
 
@@ -14,13 +14,30 @@
 import button from '../atoms/button'
 import input from '../atoms/input'
 
+import {mapGetters, mapActions} from 'vuex'
+
 export default {
     name: 'Login',
     components: {
         'v-button': button,
         'v-input': input
     },
+    computed:{
+        ...mapGetters(['getToken'])
+    },
     methods: {
+        ...mapActions({
+            connect: 'connect'
+        }),
+        connectUser(){
+            
+            this.connect({
+                mail: this.$el.children[1].children[0].value,
+                password: this.$el.children[3].children[0].value
+            }).then( (rep) => {
+                console.log(rep)
+            })
+        }
     }
 }
 </script>

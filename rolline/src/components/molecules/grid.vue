@@ -5,6 +5,7 @@
         :title="card.title"
         :tags="card.tags"
         :players="card.players"
+        :cover="card.cover"
         ></card-game>
   </div>
 </template>
