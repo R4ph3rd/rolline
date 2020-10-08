@@ -10,16 +10,23 @@
           <li>
               <router-link to="community">Communauté</router-link>
           </li>
+          <li v-if="!isConnected">
+              <router-link  to="connexion">Bibliothèque</router-link>
+          </li>
           <li>
-              <router-link v-if="isConnected" to="connexion" >Connexion</router-link>
+              <a v-if="isConnected" to="connexion" @click="connectWindow()">Connexion</a>
               <router-link v-else to="profile" >Profil</router-link>
           </li>
       </ul>
+
+      <v-login v-if="isConnected" v-show="loginWindow" class="login_window"></v-login>
   </div>
 </template>
 
 <script>
 import spacer from '@/components/atoms/spacer'
+import login from '@/components/molecules/login'
+
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
@@ -34,11 +41,13 @@ export default {
     data(){
         return {
             scrollTop : 0,
-            scrollDirection: true
+            scrollDirection: true,
+            loginWindow: false
         }
     },
     components: {
-        'v-spacer' : spacer
+        'v-spacer' : spacer,
+        'v-login':login
     },
     computed:{
         ...mapGetters(['getToken']),
@@ -64,6 +73,11 @@ export default {
             }
 
             this.scrollTop = e.srcElement.scrollingElement.scrollTop ;
+            this.loginWindow = false;
+        },
+        connectWindow(){
+            this.loginWindow = true;
+            return false;
         }
     },
     created () {
@@ -71,6 +85,11 @@ export default {
     },
     destroyed () {
         window.removeEventListener('scroll', this.handleScroll);
+    },
+    watch:{
+        $route(oldval, newval){
+            this.loginWindow = false;
+        }
     }
 }
 </script>
@@ -102,9 +121,13 @@ export default {
 
     ul{
         display:flex;
-        justify-content: space-between;
+        // justify-content: space-between;
         align-items: center;
-        width:44em;
+        width:max-content;
+
+        li{
+            margin-left:5vw;
+        }
 
         a {
             position: relative;
@@ -126,10 +149,14 @@ export default {
                 transition: .2s ease-out;
             }
 
-            &:hover::after{
-                left:0;
-                width:100%;
-                transition: .2s ease-out;
+            &:hover{
+                cursor:pointer;
+
+                a::after{
+                    left:0;
+                    width:100%;
+                    transition: .2s ease-out;
+                }
             }
         }
     }
@@ -149,6 +176,12 @@ export default {
             background: $r-color-primary;
             transition: .2s ease-out;
         }
+    }
+
+    .login_window{
+        position:absolute;
+        top:110%;
+        right:50px;
     }
 }
 </style>
