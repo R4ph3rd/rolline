@@ -1,8 +1,9 @@
 <template>
-<div>
-  <input :type="type" :class="style" :placeholder="placeholderText" :value="valueText" :name="name">
-  <label :for="name" class="reveal" v-if="password || checkbox" @click="labelClick()">{{checkboxText}}</label>
-  <p class="alert" v-if="password" v-show="alertSecurity">Le mot de passe doit contenir au moins 6 caractères et comporter au moins une majuscule, une minuscule et un caractère spécial.</p>
+<div :class="securityLevel">
+    <label  :for="name">{{name}}</label>
+    <input :type="type" :class="style" :placeholder="placeholderText" :value="valueText" :name="name">
+    <label :for="name" class="reveal" v-if="password || checkbox" @click="labelClick()">{{checkboxText}}</label>
+    <p class="alert" v-if="password" v-show="alertSecurity">Le mot de passe doit contenir au moins 6 caractères et comporter au moins une majuscule, une minuscule et un caractère spécial.</p>
 </div>
 </template>
 
@@ -44,7 +45,7 @@ export default {
         style(){
             if (this.submit) return 'submit' ;
             if (this.submit) return 'checkbox' ;
-            if(this.password) return this.securityLevel;
+            if(this.password) return 'password';
         },
         valueText(){
             if (this.submit) return this.$slots.default[0].text ;
@@ -106,36 +107,44 @@ export default {
 
 div{
     position:relative;
+    padding: 10px 15px 10px 15px;
+    border: $r-color-light01 1px solid;
+    box-shadow:$r-shadow-02dp; 
+    border-radius: 8px;
+
+    &.Insufisant{
+        border-color: darkred;
+        transition: .3s ease-in;
+    }
+    &.Correct{
+        border-color:gold;
+        transition: .3s ease-in;
+    }
+    &.Robuste{
+        border-color:lawngreen;
+        transition: .3s ease-in;
+    }
+
+    & > label{
+        font-size:.98em;
+        font-weight:200;
+        color: $r-color-dark05;
+    }
 
     input{
         position:relative;
         width:100%;
         height: max-content;
-        padding: 15px 10px;
 
-        border: $r-color-light01 1px solid;
+        border:none;
         background:none;
-        box-shadow:$r-shadow-02dp; 
-        border-radius: 8px;
 
-        color:$r-color-light02;
-        font-weight:400;
+        color:$r-color-light01;
+        font-weight:500;
+        font-size:1em;
 
         &::placeholder{
-            color: $r-color-light04;
-        }
-
-        &[type="password"].Insufisant{
-            border-color:darkred;
-            transition: .3s ease-in;
-        }
-        &[type="password"].Correct{
-            border-color:gold;
-            transition: .3s ease-in;
-        }
-        &[type="password"].Robuste{
-            border-color:lawngreen;
-            transition: .3s ease-in;
+            color: $r-color-light01;
         }
 
         &[type="checkbox"]{

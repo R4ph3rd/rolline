@@ -13,8 +13,7 @@ const getGame = async (game_id) => {
         return {
             game_infos : responses[0][0],
             game_tags : Object.values(responses[1][0]),
-            game_users_id : responses[2].map( user => user.user_id),
-            cool : 'super'
+            game_users_id : responses[2].map( user => user.user_id)
         }
     }) ;
 }

@@ -39,16 +39,15 @@ const routes =  [
     ]
   },
   {
-    path: '/game/:id',
-    name: 'Game',
-    component: () => import( '../layer/layoutGameBoard.vue'),
-    // children: [
-    //   {
-    //     path: ':id',
-    //     name: 'InGame'
-    //     // component: () => import( '../views/CreateGame.vue')
-    //   }
-    // ]
+    path: 'game',
+    name: 'Game_undefined',
+    children:[
+      {
+        path: '/game/:id',
+        name: 'Game',
+        component: () => import( '../layer/layoutGameBoard.vue'),
+      }
+    ]
   },
   {
     path: '/home',
