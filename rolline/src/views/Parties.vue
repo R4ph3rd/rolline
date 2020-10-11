@@ -67,10 +67,10 @@ export default {
         response.data.forEach(gameData => {
           this.getGame(gameData.id).then(rep => {
             this.public_games.push({
-              title: rep.data.game_infos[0].name,
-              tags: Object.values(rep.data.game_tags[0]),
+              title: rep.data.game_infos.name,
+              tags: rep.data.game_tags,
               players: rep.data.game_users_id,
-              cover: rep.data.game_infos[0].cover
+              cover: rep.data.game_infos.cover
             })
           })
         })

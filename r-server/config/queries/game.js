@@ -5,17 +5,18 @@ const getGames = async ({limit = 100, orderKey = 'creation_date', order = 'asc'}
 }
 
 const getGame = async (game_id) => {
-    console.log('id : ', game_id.id)
-    let game =  await db.select().from('games').where('id', game_id.id)
-    let tags =  await db.select('tag_1', 'tag_2', 'tag_3').from('tags_by_games').where('game_id', game_id.id)
-    let users =  await db.select('user_id').from('users_by_games').where('game_id', game_id.id)
-    console.log( game, tags, users.map( user => user.user_id))
-
-    return {
-        game_infos : game,
-        game_tags : tags,
-        game_users_id : users.map( user => user.user_id)
-    }
+    return await Promise.all([
+        db.select().from('games').where('id', game_id.id),
+        db.select('tag_1', 'tag_2', 'tag_3').from('tags_by_games').where('game_id', game_id.id),
+        db.select('user_id').from('users_by_games').where('game_id', game_id.id)
+    ]).then( responses => {
+        return {
+            game_infos : responses[0][0],
+            game_tags : Object.values(responses[1][0]),
+            game_users_id : responses[2].map( user => user.user_id),
+            cool : 'super'
+        }
+    }) ;
 }
 
 const createGame = async ({name = 'COCOGAME', tags = []}) => {
