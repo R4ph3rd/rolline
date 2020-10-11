@@ -1,4 +1,4 @@
-#!/bin/bash firefox "$1"
+
 
 sudo systemctl start mysqld.service
 sudo systemctl start httpd.service

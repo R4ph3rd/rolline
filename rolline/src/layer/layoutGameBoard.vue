@@ -2,7 +2,7 @@
   <div class="layoutGameboard">
     <div class="gameboard">
         <!-- <vue-router></vue-router> -->
-        <v-button ></v-button>
+        <!-- <v-button ></v-button> -->
     </div>
     <v-chat></v-chat>
   </div>

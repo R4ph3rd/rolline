@@ -5,17 +5,17 @@
 
       <ul class="nav">
           <li>
-              <router-link to="parties" >Parties</router-link>
+              <router-link to="/games" >Parties</router-link>
           </li>
           <li>
-              <router-link to="community">Communauté</router-link>
+              <router-link to="/community">Communauté</router-link>
           </li>
           <li v-if="!isConnected">
-              <router-link  to="connexion">Bibliothèque</router-link>
+              <router-link  to="/bibliotheque">Bibliothèque</router-link>
           </li>
           <li>
-              <a v-if="isConnected" to="connexion" @click="connectWindow()">Connexion</a>
-              <router-link v-else to="profile" >Profil</router-link>
+              <a v-if="isConnected" @click="connectWindow()">Connexion</a>
+              <router-link v-else to="/profile" >Profil</router-link>
           </li>
       </ul>
 

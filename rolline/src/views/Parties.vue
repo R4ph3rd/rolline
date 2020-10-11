@@ -10,6 +10,8 @@
         :players="card.players"
         :cover="card.cover"
         ></card-game>
+
+        <button @click="goToCreateGame()" class="create_game">+</button>
       </v-grid>
     </section>
 
@@ -25,6 +27,8 @@
         ></card-game>
       </v-grid>
     </section>
+
+    <router-view></router-view>
   </div>
 </template>
 
@@ -86,6 +90,9 @@ export default {
         })
       })
       }
+    },
+    goToCreateGame(){
+      this.$router.push('/games/create');
     }
   },
   mounted(){
@@ -101,6 +108,24 @@ export default {
 
   section{
     margin-bottom:130px;
+  }
+
+  .create_game{
+    display:flex;
+    justify-content: center;
+    align-items:center;
+
+    background: $r-layer-02dp;
+    border:none;
+    border-radius:8px;
+
+    font-weight:700;
+    font-size:2em;
+    color: $r-color-light02;
+
+    &:hover{
+      cursor:pointer;
+    }
   }
 }
 </style>

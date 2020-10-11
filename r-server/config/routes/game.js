@@ -18,7 +18,6 @@ module.exports = [
         path: '/game',
         // headers: {"Access-Control-Allow-Origin": "*"},
         handler: async (request, h) => {
-            console.log(request.payload)
             await gameQueries.creatGame({name: request.payload.name, tags: request.payload.tags});
             console.log('Insertion of new game made')
             return 'Insertion of new game made !';

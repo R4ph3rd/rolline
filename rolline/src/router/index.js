@@ -10,9 +10,16 @@ const routes =  [
     component: () => import( '../layer/layoutWebsite.vue'),
     children:[
       {
-        path: 'parties',
+        path: 'games',
         name: 'Parties',
-        component: () => import( '../views/Parties.vue')
+        component: () => import( '../views/Parties.vue'),
+        children: [
+          {
+            path: 'create',
+            name: 'CreateGame',
+            component: () => import( '../views/CreateGame.vue')
+          }
+        ]
       },
       {
         path: 'community',
@@ -20,9 +27,9 @@ const routes =  [
         component: () => import( '../views/Community.vue')
       },
       {
-        path: 'connexion',
-        name: 'Connexion',
-        component: () => import( '../views/Connexion.vue')
+        path: 'bibliotheque',
+        name: 'Bibliothèque',
+        component: () => import( '../views/Bibliotheque.vue')
       },
       {
         path: 'profile',
@@ -32,9 +39,16 @@ const routes =  [
     ]
   },
   {
-    path: '/game',
+    path: '/game/:id',
     name: 'Game',
-    component: () => import( '../layer/layoutGameBoard.vue')
+    component: () => import( '../layer/layoutGameBoard.vue'),
+    // children: [
+    //   {
+    //     path: ':id',
+    //     name: 'InGame'
+    //     // component: () => import( '../views/CreateGame.vue')
+    //   }
+    // ]
   },
   {
     path: '/home',
