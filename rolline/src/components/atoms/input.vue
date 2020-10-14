@@ -1,7 +1,7 @@
 <template>
 <div :class="securityLevel">
     <label  :for="name">{{name}}</label>
-    <input :type="type" :class="style" :placeholder="placeholderText" :value="valueText" :name="name">
+    <input :type="type" :class="style"  :value="valueText" :name="name">
     <label :for="name" class="reveal" v-if="password || checkbox" @click="labelClick()">{{checkboxText}}</label>
     <p class="alert" v-if="password" v-show="alertSecurity">Le mot de passe doit contenir au moins 6 caractères et comporter au moins une majuscule, une minuscule et un caractère spécial.</p>
 </div>
@@ -108,7 +108,7 @@ export default {
 div{
     position:relative;
     padding: 10px 15px 10px 15px;
-    border: $r-color-light01 1px solid;
+    border: $r-color-dark04 1px solid;
     box-shadow:$r-shadow-02dp; 
     border-radius: 8px;
 
@@ -183,10 +183,10 @@ div{
         height:20px;
         background:url('~@/assets/icons/eye-off.svg') center;
         background-size: contain;
-        filter: invert(.9);
+        filter: invert(.7);
 
         position: absolute;
-        top: 1.05em;
+        top: calc(50% - 10px);
         right:16px;
         font-size:.95em;
 

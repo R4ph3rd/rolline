@@ -12,6 +12,16 @@
     font-weight:300;
 }
 
+.rounded{
+    padding:10px 25px;
+    border-radius:2em;
+
+    &.large{
+        padding: 20px 30px;
+        border-radius:3em;
+    }
+}
+
 /* colors specs */
 .primary {
     background-color: $r-color-primary;

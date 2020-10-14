@@ -14,7 +14,7 @@
               <router-link  to="/bibliotheque">Bibliothèque</router-link>
           </li>
           <li>
-              <a v-if="isConnected" @click="connectWindow()">Connexion</a>
+              <a v-if="isConnected" @click="connectWindow()" class="rounded primary">Connexion</a>
               <router-link v-else to="/profile" >Profil</router-link>
           </li>
       </ul>
@@ -103,7 +103,7 @@ export default {
     width:100vw;
     height:max-content;
     padding:20px;
-    padding-right:60px;
+    padding-right:80px;
 
     display:flex;
     align-items: center;
@@ -131,10 +131,14 @@ export default {
 
         a {
             position: relative;
-            font-size: .9em;
+            font-size: 10pt;
             font-weight:300;
             color: $r-color-light02;
             text-transform: uppercase;
+
+            &.rounded{
+                font-weight:400
+            }
 
             &::after{
                 content: ' ';
@@ -181,7 +185,7 @@ export default {
     .login_window{
         position:absolute;
         top:110%;
-        right:50px;
+        right:80px;
     }
 }
 </style>

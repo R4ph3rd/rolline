@@ -1,20 +1,23 @@
 <template>
-  <div class="layer04dp login">
-        <label for="name">Adresse pour hiboux électroniques</label>
-        <v-input name="name">Provencal@legaulois.com</v-input>
+  <div class="login">
+        <!-- <label for="Email">Adresse pour hiboux électroniques</label> -->
+        <v-input name="Email">Provencal@legaulois.com</v-input>
 
-        <label for="mdp">Mot de passe d'aventurier</label>
-        <v-input password name="mdp">ghq7k!</v-input>
+        <!-- <label for="Mot de passe">Mot de passe d'aventurier</label> -->
+        <v-input password name="Mot de passe"> </v-input>
 
-        <v-button class="primary" @click.native="connectUser()">Connect</v-button>
+        <router-link to="getAccount" class="mdpforgot">Mot de passe oublié ?</router-link>
+
+        <v-button class="primary rounded large" @click.native="connectUser()">Se connecter</v-button>
 
         <!-- <div class="or">
             <span></span>
             or
             <span></span>
         </div> -->
+        <p>Tu n'as pas de compte ? <router-link to="register">S'enregistrer</router-link></p>
 
-        <v-button class="signUp" outlined @click.native="goToSignUp()">Sign up</v-button>
+        <!-- <v-button class="signUp" outlined @click.native="goToSignUp()">Sign up</v-button> -->
   </div>
 </template>
 
@@ -37,8 +40,8 @@ export default {
         connectUser(){
             
             this.connect({
-                mail: this.$el.children[1].children[0].value,
-                password: this.$el.children[3].children[0].value
+                mail: this.$el.children[0].children[0].value,
+                password: this.$el.children[1].children[0].value
             }).then( (rep) => {
                 console.log(rep)
                 if(rep.token){
@@ -72,7 +75,7 @@ export default {
         padding:30px;
         border-radius:8px;
 
-        // background: $r-layer-04dp;
+        background: $r-gradient-dark;
         box-shadow: $r-shadow-04dp;
 
         label{
@@ -87,28 +90,37 @@ export default {
         }
 
         div{
-            margin-bottom:30px;
+            margin-bottom:20px;
+
+            &:nth-child(2){
+                margin-bottom:12px;
+            }
         }
 
         button{
             margin-top:20px;
             margin-bottom:unset;
+
+            &.large{ 
+                text-transform:uppercase;
+                font-size:400;
+            }
         }
 
-        .or{
-            width:100%;
-            height:max-content;
-            display:grid;
-            grid-template-columns: 1fr auto 1fr;
-            grid-column-gap:12px;
-            align-items:center;
-            color: $r-color-light03;
+        .mdpforgot{
+            margin-bottom:20px;
+        }
 
-            & span {
-                width:100%;
-                height:1px;
-                border-radius:2px;
-                background-color:$r-color-light03;
+        a{color:$r-color-primary}
+
+        p:last-child{
+            color:$r-color-dark04;
+            font-weight:300;
+            margin-top:20px;
+
+            a {
+                margin-left:10px;
+                font-weight:500;
             }
         }
     }
