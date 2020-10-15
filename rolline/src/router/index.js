@@ -13,13 +13,11 @@ const routes =  [
         path: 'games',
         name: 'Parties',
         component: () => import( '../views/Parties.vue'),
-        children: [
-          {
-            path: 'create',
-            name: 'CreateGame',
-            component: () => import( '../views/CreateGame.vue')
-          }
-        ]
+      },
+      {
+        path: 'games/create',
+        name: 'CreateGame',
+        component: () => import( '../views/CreateGame.vue')
       },
       {
         path: 'community',
