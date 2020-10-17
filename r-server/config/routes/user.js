@@ -7,7 +7,7 @@ module.exports = [
         handler: async (request, h) => {
             if (request.params.user){
                 let user = await userQueries.getUser({id: request.params.user});
-                return {data: user, msg : `Hello ${user[0].mail} !`};
+                return {data: user};
             } else {
                 return {data: await userQueries.getUsers()};
             }

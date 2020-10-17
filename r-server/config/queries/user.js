@@ -6,16 +6,10 @@ const getUsers = async ({limit = 100, orderKey = 'inscription_date', order = 'de
 
 const getUser = async (infosUser) => {
     if (infosUser.id){
-        return await db.select().from('users').where('id', infosUser.id)
-    }
-    if (infosUser.discord_id){
-        return await db.select().from('users').where('name', infosUser.discord_id)
-    }
-    if (infosUser.mail){
-        return await db.select().from('users').where('name', infosUser.mail)
-    }
-    if (infosUser.inscription_date){
-        return await db.select().from('users').where('name', infosUser.inscription_date)
+        return await db.select().from('users').where('id', infosUser.id).then( async (res) => {
+            let games = await db.pluck('game_id').from('users_by_games').where('user_id', res[0].id);
+            return {infos_user : res[0], games_id : games}
+        })
     }
 }
 

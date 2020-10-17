@@ -8,6 +8,7 @@
         :title="card.title"
         :tags="card.tags"
         :players="card.players"
+        :description="card.description"
         :cover="card.cover"
         ></card-game>
 
@@ -23,6 +24,7 @@
         :title="card.title"
         :tags="card.tags"
         :players="card.players"
+        :description="card.description"
         :cover="card.cover"
         ></card-game>
       </v-grid>
@@ -70,7 +72,8 @@ export default {
               title: rep.data.game_infos.name,
               tags: rep.data.game_tags,
               players: rep.data.game_users_id,
-              cover: rep.data.game_infos.cover
+              cover: rep.data.game_infos.cover,
+              // description : rep.data.game_infos[0].description
             })
           })
         })
@@ -84,7 +87,8 @@ export default {
               title: rep.data.game_infos[0].name,
               tags: Object.values(rep.data.game_tags[0]),
               players: rep.data.game_users_id,
-              cover: rep.data.game_infos[0].cover
+              cover: rep.data.game_infos[0].cover,
+              // description : rep.data.game_infos[0].description
             })
           })
         })
