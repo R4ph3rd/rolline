@@ -79,19 +79,18 @@ export default {
         })
       })
 
-      if (this.isConnected){
-        this.getEnrolledGames().then (response => {
-        response.data.forEach(gameData => {
-          this.getGame(gameData.id).then(rep => {
+      if (!this.isConnected){
+        this.getEnrolledGames().then (rep => {
+          rep.forEach(game => {
             this.enrolled_games.push({
-              title: rep.data.game_infos[0].name,
-              tags: Object.values(rep.data.game_tags[0]),
-              players: rep.data.game_users_id,
-              cover: rep.data.game_infos[0].cover,
-              // description : rep.data.game_infos[0].description
+              title: game.game_infos.name,
+              tags: game.game_tags,
+              players: game.game_users_id,
+              cover: game.game_infos.cover,
+              // description : game.data.game_infos[0].description
             })
           })
-        })
+            
       })
       }
     },

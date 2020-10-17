@@ -15,7 +15,7 @@
             <a @click="openTab()">Voir la fiche complète</a>
 
             <ul class="players">
-                <li v-for="(player, i) in players" :key="player" :style="transformItem(i)"></li>
+                <li v-for="(player, i) in players" :key="player + i" :style="transformItem(i)"></li>
             </ul>
         </div>
   </div>

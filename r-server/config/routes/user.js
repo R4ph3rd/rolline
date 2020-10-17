@@ -6,8 +6,7 @@ module.exports = [
         path: '/user/{user?}',
         handler: async (request, h) => {
             if (request.params.user){
-                let user = await userQueries.getUser({id: request.params.user});
-                return {data: user};
+                return {data : await userQueries.getUser({id: request.params.user})};
             } else {
                 return {data: await userQueries.getUsers()};
             }

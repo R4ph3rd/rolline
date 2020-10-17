@@ -46,9 +46,13 @@ export default{
             console.error(err)
         })
     },
-    getEnrolledGames(context, payload){
-        return axios(urls.game, {limit : 2}).then( function(response){
-            return response.data ;
+    async getEnrolledGames(context, payload){
+        return await axios(urls.user + '/1').then( async (response) => {
+            response.data.data.games_id = await Promise.all(response.data.data.games_id.map( async (game_id) => {
+                let game = await axios(urls.game + '/' + game_id);
+                return game.data.data
+            }))
+            return response.data.data.games_id ;
         })
         .catch( function(err){
             console.error(err)
