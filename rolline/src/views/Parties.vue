@@ -66,13 +66,13 @@ export default {
     }),
     generateGamesData(){
       this.getGames().then (response => {
-        response.data.forEach(gameData => {
+        response.forEach(gameData => {
           this.getGame(gameData.id).then(rep => {
             this.public_games.push({
-              title: rep.data.game_infos.name,
-              tags: rep.data.game_tags,
-              players: rep.data.game_users_id,
-              cover: rep.data.game_infos.cover,
+              title: rep.game_infos.name,
+              tags: rep.game_tags,
+              players: rep.game_users_id,
+              cover: rep.game_infos.cover,
               // description : rep.data.game_infos[0].description
             })
           })

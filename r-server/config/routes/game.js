@@ -6,10 +6,9 @@ module.exports = [
         path: '/game/{game_id?}',
         handler: async (request, h) => {
             if (request.params.game_id){
-                let game = await gameQueries.getGame({id: request.params.game_id});
-                return {data: game};
+                return await gameQueries.getGame({id: request.params.game_id});
             } else {
-                return {data: await gameQueries.getGames()};
+                return await gameQueries.getGames();
             }
         }
     },
