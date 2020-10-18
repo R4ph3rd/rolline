@@ -71,12 +71,15 @@ export default{
     },
     clearLocalStorage(context, payload){
         context.commit('clearLocalStorage');
-    }
+    },
     /*setToken(context, payload){
         context.commit('setToken', response.data)
     },
     clearLocalStorage(context, payload){
         context.commit('clearLocalStorage');
-    }
+    },
     */
+    createGame(context, payload){
+        console.log(payload)
+    }
 }

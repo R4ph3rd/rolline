@@ -8,8 +8,8 @@
       <input-search name="Tags affiliés" class="tags">Super</input-search>
 
       <div class="inline_inputs">
-        <v-input name="Mode de jeu" class="gamemode"></v-input>
-        <v-input name="Template de la fiche de personnage" class="template"></v-input>
+        <v-list name="Mode de jeu" class="gamemode" :list="gamemodes"></v-list>
+        <v-list name="Template de la fiche de personnage" class="template" :list="templates"></v-list>
       </div>
 
       <input-search name="Joueurs invités" class="players">Super</input-search>
@@ -17,21 +17,28 @@
       <v-input name="publication" toggle class="publication"></v-input>
 
       <drop-zone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></drop-zone>
+
+      <v-button class="submit primary rounded large" @click.native="submitGame()"> Créer ma partie </v-button>
     </section>
   </div>
 </template>
 
 <script>
 import input from '@/components/atoms/input'
+import button from '@/components/atoms/button'
+import list from '@/components/atoms/list'
 import inputSearch from '@/components/molecules/inputSearch'
 
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'CreateGame',
   components:{
     'v-input': input,
+    'v-list' : list,
+    'v-button' : button,
     'input-search': inputSearch,
     'drop-zone': vue2Dropzone
   },
@@ -43,7 +50,22 @@ export default {
           maxFilesize: 0.5,
           headers: { "My-Awesome-Header": "header value" },
           dictDefaultMessage: "<i class='upload'></i>Drag & drop ton image ici"
-      }
+      },
+      gamemodes : ['cool', 'super', 'top', 'banene', 'mangue'],
+      templates : ['DnD', 'shadow runner', 'simple']
+    }
+  },
+  methods: {
+    ...mapActions({
+      createGame : 'createGame'
+    }),
+    submitGame(){
+      let form = this.$el.children[2].children;
+      this.createGame({
+        name : form[0].children[1].value,
+        publication : form[4].children[1].checked,
+        form : form
+      });
     }
   }
 }
@@ -109,6 +131,25 @@ h2{
 
   & #dropzone{
     grid-column: 1/ 3;
+    height:20vh;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+
+    border: none;
+    border-radius:8px;
+    background : $r-layer-02dp;
+    box-shadow: $r-shadow-04dp;
+  }
+
+  & .submit{
+    $pad : 40px;
+    grid-column: 2/3;
+    width:max-content;
+    padding-left:$pad;
+    padding-right:$pad;
+
+    justify-self:end;
   }
 }
 
