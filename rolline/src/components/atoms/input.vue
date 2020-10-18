@@ -1,8 +1,9 @@
 <template>
-<div :class="securityLevel">
+<div :class="blockStyle">
     <label  :for="name">{{name}}</label>
     <input :type="type" :class="style"  :value="valueText" :name="name">
     <label :for="name" class="reveal" v-if="password || checkbox" @click="labelClick()">{{checkboxText}}</label>
+    <span v-if="toggle" class="control"></span>
     <p class="alert" v-if="password" v-show="alertSecurity">Le mot de passe doit contenir au moins 6 caractères et comporter au moins une majuscule, une minuscule et un caractère spécial.</p>
 </div>
 </template>
@@ -23,10 +24,14 @@ export default {
             type: Boolean,
             required: false
         },
+        toggle: {
+            type: Boolean,
+            required: false
+        },
         name: {
             type: String,
             required: false
-        }
+        },
     },
     data(){
         return {
@@ -36,16 +41,22 @@ export default {
         }
     },
     computed:{
+        blockStyle(){
+            if (this.password) return this.securityLevel;
+            if (this.toggle) return 'toggleBox'
+        },
         type(){
             if (this.password) return this.visiblePasswordOrNot ? 'text' :'password' ;
             if (this.submit) return 'submit' ;
             if (this.checkbox) return 'checkbox' ;
+            if( this.toggle) return 'checkbox' ;
             return 'text'
         },
         style(){
             if (this.submit) return 'submit' ;
             if (this.submit) return 'checkbox' ;
             if(this.password) return 'password';
+            if( this.toggle) return 'toggle' ;
         },
         valueText(){
             if (this.submit) return this.$slots.default[0].text ;
@@ -104,6 +115,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$toggle-width:60px;
+$toggle-height: 34px;
+$toggle-gutter: 5px;
+$toggle-radius: 50%;
+$toggle-control-speed: .15s;
+$toggle-control-ease: ease-in;
+$toggle-radius: $toggle-height / 2;
+$toggle-control-size: $toggle-height - ($toggle-gutter * 2);
 
 div{
     position:relative;
@@ -111,6 +130,68 @@ div{
     border: $r-color-dark04 1px solid;
     box-shadow:$r-shadow-02dp; 
     border-radius: 8px;
+
+    &.toggleBox{
+        padding-left:0 !important;
+        border:none;
+        box-shadow: none;
+        display: block;
+        padding-left: $toggle-width;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 22px;
+        user-select: none;
+
+        & label {
+            display:block;
+            margin-bottom:12px;
+            font-size:14pt;
+            text-transform: capitalize;
+        }
+
+        /* toggle style */
+        .toggle{
+            z-index:2;
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            width: $toggle-width !important;
+            height: $toggle-height !important;
+
+            &:checked  + .control {
+                background-color: $r-color-primary;
+                
+                &:after {
+                    left: $toggle-width - $toggle-control-size - $toggle-gutter;
+                    background: $r-color-light01;
+                }
+            }
+        }
+
+        .control {
+            z-index:1;
+            position:relative;
+            display:inline-block;
+            height: $toggle-height;
+            width: $toggle-width;
+            border-radius: $toggle-radius;
+            background-color: $r-color-light01;
+            box-shadow:$r-shadow-02dp; 
+            transition: background-color $toggle-control-speed $toggle-control-ease;
+
+            &:after {
+                content: "";
+                position: absolute;
+                left: $toggle-gutter;
+                top: $toggle-gutter;
+                width: $toggle-control-size;
+                height: $toggle-control-size;
+                border-radius: $toggle-radius;
+                background: $r-color-primary;
+                transition: left $toggle-control-speed $toggle-control-ease;
+            }
+        }
+    }
 
     &.Insufisant{
         border-color: darkred;

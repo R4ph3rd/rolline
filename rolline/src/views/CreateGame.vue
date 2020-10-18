@@ -1,18 +1,20 @@
 <template>
   <div class="createGame">
     <h2>Créer une nouvelle histoire</h2>
-    <p>Poser les fondations du récit de vos futures aventures.</p>
+    <p>Poser les fondations du récit de vos futures aventures</p>
 
     <section class="form">
-      <v-input name="Nom de la partie">Chroniques oubliées</v-input>
-      <input-search name="Tags affiliés">Super</input-search>
+      <v-input name="Nom de la partie" class="name">Chroniques oubliées</v-input>
+      <input-search name="Tags affiliés" class="tags">Super</input-search>
 
-      <v-input name="Mode de jeu"></v-input>
-      <v-input name="Template de la fiche de personnage"></v-input>
+      <div class="inline_inputs">
+        <v-input name="Mode de jeu" class="gamemode"></v-input>
+        <v-input name="Template de la fiche de personnage" class="template"></v-input>
+      </div>
 
-      <input-search name="Joueurs invités">Super</input-search>
+      <input-search name="Joueurs invités" class="players">Super</input-search>
 
-      <v-input name="publication" type="toggle"></v-input>
+      <v-input name="publication" toggle class="publication"></v-input>
 
       <drop-zone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></drop-zone>
     </section>
@@ -47,11 +49,67 @@ export default {
 }
 </script>
 // https://rowanwins.github.io/vue-dropzone/docs/dist/#/iconDemo/
-<style lang="scss">
+<style lang="scss" scoped>
 .upload{
   display:inline-block;
   width:30px;
   height:30px;
   background:$r-color-primary;
 }
+
+h2{
+  margin-bottom:0;
+
+  & + p{
+    color:$r-color-dark05;
+    font-weight:300;
+    font-size:14pt;
+
+    margin-bottom:50px;
+  }
+}
+
+.form{
+  display:grid;
+  grid-template-columns: 40% 60%;
+  grid-template-rows: max-content repeat(4, max-content);
+
+  grid-column-gap: 100px;
+  grid-row-gap: 40px;
+
+  & .name{
+    grid-area: 1 / 1 / 2 / 2;
+  }
+
+  & .inline_inputs{
+    grid-area : 1 / 2 / 2 / 3 ;
+    display:flex;
+
+    & .template{
+      width : 60%;
+    }
+
+    & .gamemode{
+      width: 30%;
+      margin-right: 10%;
+    }
+  }
+
+  & .tags {
+    grid-area : 2 / 1 / 3 / 2 ;
+  }
+
+  & .publication{
+    grid-area : 3 / 1 / 4 / 2;
+  }
+
+  & .players{
+    grid-area: 2 / 2 / 3 / 3;
+  }
+
+  & #dropzone{
+    grid-column: 1/ 3;
+  }
+}
+
 </style>
