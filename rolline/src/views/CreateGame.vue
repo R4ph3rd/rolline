@@ -5,14 +5,14 @@
 
     <section class="form">
       <v-input name="Nom de la partie" class="name">Chroniques oubliées</v-input>
-      <input-search name="Tags affiliés" class="tags">Super</input-search>
+      <input-search name="Tags affiliés" autocomplete class="tags">Super</input-search>
 
       <div class="inline_inputs">
         <v-list name="Mode de jeu" class="gamemode" :list="gamemodes"></v-list>
         <v-list name="Template de la fiche de personnage" class="template" :list="templates"></v-list>
       </div>
 
-      <input-search name="Joueurs invités" class="players">Super</input-search>
+      <input-search name="Joueurs invités" autocomplete class="players">Super</input-search>
 
       <v-input name="publication" toggle class="publication"></v-input>
 
@@ -39,6 +39,7 @@ export default {
     'v-input': input,
     'v-list' : list,
     'v-button' : button,
+    'input-search' : inputSearch,
     'input-search': inputSearch,
     'drop-zone': vue2Dropzone
   },

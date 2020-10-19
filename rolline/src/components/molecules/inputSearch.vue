@@ -1,113 +1,152 @@
 <template>
 <div class="search">
-    <label  :for="name">{{name}}</label>
-    <input type="text" :placeholder="placeholderText" :name="name" :style="'padding-left:' + paddingPins">
+    <div class="scrollBox">
+        <label  :for="name">{{name}}</label>
+        <input type="search" :placeholder="placeholderText" :name="name" :style="'padding-left:' + paddingPins + 'px'">
 
-        <div class="flexPins" v-show="tags.length > 0">
-            <input-pin
-            :for="name" v-for="(tag, i) in tags" 
-            :key="tag + i" 
-            >{{tag}}</input-pin>
-        </div>
+        <ul class="selectedPins" v-show="selectedPins.length > 0">
+            <input-pin 
+                v-for="pin in selectedPins" 
+                :key="pin" 
+                deletable
+                @delete="removePin(pin)"
+            >{{pin}}</input-pin>
+        </ul>
+    </div>
 
-    <ul class="predict" v-show="isThereAnyResult" >
-        <tag-pin 
-            v-for="(value, key) in results" 
-            :key="reactiveKeys + key" 
-            :tagName="key"  
-            @select="resetInput()">
-            </tag-pin>
+    <ul class="predict layer02dp" v-show="isThereAnyResult" >
+        <input-pin 
+            v-for="prediction in predictions" 
+            :key="prediction" 
+            @select="selectPin(prediction)"
+        >{{prediction}}</input-pin>
     </ul>
 </div>
 </template>
 
 <script>
-import tagPin from '@/components/atoms/tagPin'
 import inputPin from '@/components/atoms/inputPin'
 
 export default {
     name: 'InputSearch',
     components: {
-        'tag-pin' : tagPin,
         'input-pin' : inputPin
-    },
-    data(){
-        return {
-            tags: [],
-            results: [],
-            paddingPins: '0px'
-        }
     },
     props:{
         name: {
             type: String,
             required: false
+        },
+        autocomplete: {
+            type: Boolean,
+            required: false
+        }
+    },
+    data(){
+        return {
+            tags: [],
+            paddingPins: 0,
+            selectedPins : [],
+            predictions : [],
+            list: [
+                'Michel Barnier',
+                'Michel Tout court',
+                'Alexandre Aster',
+                'Stéphane',
+                'Zimbra',
+                'yougoslavie',
+                'hector',
+                'arthur',
+                'kaamelott',
+                'perceval',
+                'provencal',
+                'super',
+                'top',
+                'cool'
+            ]
         }
     },
     methods:{
         typingInSearch(inputValue){
             if (inputValue.length >= 1){
-                let filteredTags = this.getTagsList.filter( tag => {
+                let filteredlist = this.list;
+                this.selectedPins.forEach(pin => {
+                    filteredlist.splice(filteredlist.findIndex(item => item == pin), 1)
+                })
+
+                this.predictions = filteredlist.filter( tag => { // create list of according items
                     let chaine = tag.toLowerCase().split(inputValue.toLowerCase()) ;
-                    return chaine.length > 1 && chaine[0] == '' ;
+                    return chaine.length > 1 ;
                 })
 
-
-                //add new tags to the list
-                filteredTags.forEach( tag => {
-                    if(!Object.keys(this.results).includes(tag)){
-                        let qte = this.howManyContent(tag)
-                        if (qte > 0){ // inutile d'afficher un tag qui n'a pas de contenus
-                            this.$set(this.results, tag, qte); // set a property through vue otherwise it does not watch the change
-                        }
-                    }
-                })
-
-                // remove those ones which not in
-                if (Object.keys(this.results).length > filteredTags.length){ 
-                    Object.keys(this.results).forEach( key => {
-                        if(!filteredTags.includes(key)){
-                            delete this.results[key];
-                            this.updateComponent(); // force change after deleting by changing the key of the component
-                        }
-                    })
-                }
+                this.predictions = this.predictions.map(prediction => prediction.split(inputValue).join(`<em>${inputValue}</em>`))
             } else {
-                this.results = {}
+                this.predictions = []
             }
         },
-        howManyContent(tag){            
-            return this.getList[this.category].filter( content => content.tags.includes(tag)).length
+        selectPin(pinValue){
+            this.selectedPins.push(pinValue.split('<em>').join('').split('</em>').join(''));
+            this.resetPredictions();
+            this.transformInput();
         },
-        updateComponent(){
-            this.reactiveKeys = Object.keys(this.results).reduce( (acc, curr) => acc += curr.toString(), '');
+        resetPredictions(){
+            this.$el.children[0].children[1].value = '';
+            this.predictions = [];
+            this.transformInput();
         },
-        resetInput(){
-            this.$el.children[0].value = '';
-            this.typingInSearch(this.$el.children[0].value);
+        transformInput(){
+            if (this.selectedPins.length >= 1){
+                this.$nextTick( () => {
+                    let ul = this.$el.children[0].children[2]
+                    this.paddingPins = Array.from(ul.children).reduce( (acc, cur) => acc += cur.getBoundingClientRect().width + 10, 0);
+                    
+                    if(ul.getBoundingClientRect().width > ul.parentElement.getBoundingClientRect().width - 100){
+                        console.log(ul.scrollLeft)
+                        ul.scroll(100, 0)
+                    }
+                })
+            }
+        },
+        removePin(pinValue){
+            this.selectedPins.splice(this.selectedPins.findIndex(pin => pinValue == pin), 1);
+            this.transformInput();
         }
     },
     computed:{
         placeholderText(){
-            if (this.$slots) return 'Dessiner une blanquette avec Processing...' ;
+            if (this.$slots) return 'Rechercher un pin...' ;
             return this.$slots.default[0].text ;
         },
         isThereAnyResult(){
-            return this.tags.length >= 1 ;
+            return this.predictions.length >= 1 ;
         }
-    }
+    },
+    mounted(){
+        if (this.autocomplete){
+            this.$el.children[0].children[1].oninput = (e) => {
+                this.typingInSearch(this.$el.children[0].children[1].value);
+
+            }
+        }
+    },
 }
 </script>
 
 <style scoped lang="scss">
 .search{
+    z-index:2;
     position:relative;
-    padding: 10px 15px 10px 15px;
     border: $r-color-light01 1px solid;
     box-shadow:$r-shadow-02dp; 
     border-radius: 8px;
 
-    & > label{
+    .scrollBox{
+        position:relative;
+        overflow-x:hidden;
+        padding: 10px 15px 10px 15px;
+    }
+
+    label{
         font-size:.98em;
         font-weight:200;
         color: $r-color-dark05;
@@ -117,6 +156,7 @@ export default {
         position:relative;
         width:100%;
         height: max-content;
+        padding-top:10px;
 
         border:none;
         // background: url('../../assets/icons/search.svg') no-repeat center left 16px;
@@ -131,35 +171,55 @@ export default {
         }
     }
 
-    ul {
-        position:relative;
-        z-index:1;
-        width:100%;
-        display:flex;
-        flex-flow: wrap;
-        padding:20px;
-        // transform: translateY(-10px);
-
-        background-color:var(--color-gray01);
-        // box-shadow: 0 3px 8px 4px rgba(0,0,0,.12); 
-        border: none;
-        border-radius: 1px 1px 8px 8px;
-    }
-
-    .flexPins{
+    .selectedPins{
         position:absolute;
-        top:9px;
-        left:52px;
+        bottom:10px;
+        left:10px;
         width:max-content;
         height:max-content;
-        z-index:9;
+        z-index:3;
+
+        max-width:calc(100% - 20px);
+        overflow-x:auto;
 
         display:flex;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
 
         & > * {
-            z-index:10;
-            margin-right:15px;
+            margin-right:10px;
+        }
+
+        &::-webkit-scrollbar { // chrome & chrome-based browsers
+            display: none;
+        }
+
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+}
+
+.predict{
+    position:absolute;
+    top:100%;
+    left:0;
+    width:100%;
+    height:max-content;
+
+    display:flex;
+    flex-direction:column;
+    padding: 10px;
+
+    // background: $r-layer-02dp;
+    border-radius: 1px 1px 8px 8px;
+
+    li {
+        width:100%;
+        height:max-content;
+        padding:10px;
+        border-radius:8px;  
+
+        &:hover{
+            background: $r-layer-02dp;
         }
     }
 }

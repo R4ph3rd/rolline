@@ -1,8 +1,8 @@
 <template>
-  <label>
-        {{filter}}
-        <button @click="deleteFilter()"></button>
-  </label>
+  <li @click="$emit('select')" :class="deletable ? 'small layer02dp' : ''">
+    <p v-html="_slot.text"></p>
+    <button v-if="deletable" @click="$emit('delete')"></button>
+  </li>
 </template>
 
 <script>
@@ -11,57 +11,69 @@ import {mapActions} from 'vuex';
 export default {
     name: 'InputPin',
     props:{
-        category: {
-            type: String,
-            required: true
+        deletable: {
+            type:Boolean,
+            required: false
         }
     },
     computed: {
-        filter(){
-            return this.$slots.default[0].text;
+        _slot(){
+            return this.$slots.default[0] ? this.$slots.default[0] : '';
         }
     },
     methods: {
-        ...mapActions({
-            filterContent: 'filterContent'
-        }),
-        deleteFilter(){
-            this.filterContent({category: this.category, tag: this.filter});
+        clickPin(){
+            this.$emit('select')
         }
-    }
+    },
 }
 </script>
 
-<style scoped lang="scss">
-    label{
+<style lang="scss">
+    li{
         width:max-content;
         height:max-content;
-        display: flex;
+        display: block;
         align-items:center;
         padding:10px 15px;
 
-        background-color:var(--color-gray01);
-        box-shadow: 0 0 8px 0 rgba(0,0,0,.02); 
         border-radius:8px;
 
-        font-weight:600;
-        font-family: 'Open Sans';
+        p{
+            font-weight:300;
+            color:$r-color-light04;
+            text-transform: capitalize;
 
-        &:hover{
-            box-shadow: 0 0 4px 0 rgba(0,0,0,.08); 
+            em{
+                font-weight:400;
+                color:$r-color-light03;
+                font-style:normal;
+            }
         }
 
+        &.small{
+            display:flex;
+            justify-content:space-between;  
 
-        button{
-            width:20px;
-            height:20px;
-            margin-left:8px;
-            // background: url('../../assets/icons/x-circle.svg') no-repeat center;
-            background-size:contain;
-            border:none;
+            padding: 5px 10px;
 
-            &:hover{
-                cursor:pointer;
+            p{
+                font-size:10pt;
+                white-space: nowrap;
+            }
+
+            button{
+                width:10pt;
+                height:10pt;
+                margin-left:8px;
+                background: url('../../assets/icons/x-circle.svg') no-repeat center;
+                background-size:contain;
+                filter:invert(1);
+                border:none;
+
+                &:hover{
+                    cursor:pointer;
+                }
             }
         }
     }
