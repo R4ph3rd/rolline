@@ -16,7 +16,7 @@
 
       <v-input name="publication" toggle class="publication"></v-input>
 
-      <drop-zone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></drop-zone>
+      <drop-zone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions" @vdropzone-file-added="test(file)"></drop-zone>
 
       <v-button class="submit primary rounded large" @click.native="submitGame()"> Créer ma partie </v-button>
     </section>
@@ -53,7 +53,8 @@ export default {
           dictDefaultMessage: "<i class='upload'></i>Drag & drop ton image ici"
       },
       gamemodes : ['cool', 'super', 'top', 'banene', 'mangue'],
-      templates : ['DnD', 'shadow runner', 'simple']
+      templates : ['DnD', 'shadow runner', 'simple'],
+      file : {}
     }
   },
   methods: {
@@ -63,10 +64,19 @@ export default {
     submitGame(){
       let form = this.$el.children[2].children;
       this.createGame({
-        name : form[0].children[1].value,
-        publication : form[4].children[1].checked,
-        form : form
+        name : this.$children[0].$el.children[1].value,
+        tags : this.$children[1].selectedPins,
+        gamemode: this.$children[2].$el.value,
+        template: this.$children[3].$el.value,
+        players : this.$children[4].selectedPins,
+        publication : this.$children[5].$el.children[1].checked,
+        cover : this.file,
+        form : this.$children
       });
+    },
+    test(file, response){
+      console.log(file)
+      if(response) console.log(response)
     }
   }
 }

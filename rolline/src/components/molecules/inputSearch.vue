@@ -44,7 +44,6 @@ export default {
     },
     data(){
         return {
-            tags: [],
             paddingPins: 0,
             selectedPins : [],
             predictions : [],
