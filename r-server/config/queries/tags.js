@@ -21,27 +21,32 @@ const getTags = async ({id, tags, tag}) => {
 
 const createTag = async (tags) => {
     return await getTags({tags : tags}).then ( async existingTags => {
-        if (existingTags !== null && existingTags.length > 0){
-            let mappedExistingTags = existingTags.map(t => t.label)
-            let newTags = tags.filter( tag => {
-                return !mappedExistingTags.includes(tag)
-            });
-
-            newTags = newTags.map(tag => {
-                return {label : tag}
-            })
-
-            /* return await db.insert(newTags).into('tags').then(id_tag => {
-                return id_tag
-            }) */
-
-            return Promise.all(newTags.map(async tag => {
-                return await insertNewtag(tag.label).then(id => {
-                    return id
+        if (existingTags !== null){
+            if (existingTags.length > 0 && existingTags.length != tags.length){
+                let mappedExistingTags = existingTags.map(t => t.label)
+                let newTags = tags.filter( tag => {
+                    return !mappedExistingTags.includes(tag)
+                });
+    
+                newTags = newTags.map(tag => {
+                    return {label : tag}
                 })
-            })).then( (ids) => {
-                return ids;
-            })
+    
+                /* return await db.insert(newTags).into('tags').then(id_tag => {
+                    return id_tag
+                }) */
+    
+                return Promise.all(newTags.map(async tag => {
+                    return await insertNewtag(tag.label).then(id => {
+                        return id
+                    })
+                })).then( (ids) => {
+                    return ids;
+                })
+            } else {
+                // just return tags ids if they are all already there
+                return existingTags.map( tag => tag.id)
+            }
 
         } else {
             tags = tags.map(tag => {
@@ -69,10 +74,18 @@ const insertNewtag = async (tag) => {
     })
 }
 
-const linkTagToGame = async ({game_id, tag_id}) => {
-    return await db.insert({'tag_id': tag_id, 'game_id' : game_id}).into('tags_by_games').then (id => {
-        return id;
-    })
+const linkTagToGame = async ({game_id, tag_id, arrTagsGame = [{game_id, tag_id}]}) => {
+    if (game_id){
+        return await db.insert({'tag_id': tag_id, 'game_id' : game_id}).into('tags_by_games').then (id => {
+            return id;
+        })
+    }
+    else if (arrTagsGame){
+        return await db.insert(arrTagsGame).into('tags_by_games').then (id => {
+            return id;
+        })
+    }
+    
 }
 
 module.exports = {
