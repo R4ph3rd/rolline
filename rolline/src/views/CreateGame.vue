@@ -70,8 +70,7 @@ export default {
         template: this.$children[3].$el.value,
         players : this.$children[4].selectedPins,
         publication : this.$children[5].$el.children[1].checked,
-        cover : this.file,
-        form : this.$children
+        cover : this.file
       });
     },
     test(file, response){

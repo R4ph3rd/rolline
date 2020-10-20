@@ -61,7 +61,8 @@ export default {
                 'provencal',
                 'super',
                 'top',
-                'cool'
+                'cool',
+                'aventure'
             ]
         }
     },
