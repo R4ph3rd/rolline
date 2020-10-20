@@ -56,7 +56,7 @@ export default {
             return this.scrollDirection && this.scrollTop > 0 ? 'hiddenSlide' : ''
         },
         isConnected(){
-            return this.getToken == (undefined || '');
+            return this.getToken === (undefined || '');
         }
     },
     methods:{

@@ -1,19 +1,26 @@
 import axios from 'axios'
+require('dotenv').config();
 
 const urls = {
-    user : 'http://localhost:5050/user',
-    userConnect: 'http://localhost:5050/user_connect',
-    game:'http://localhost:5050/game',
+    user : `http://localhost:5051/user`,
+    userConnect: `http://localhost:5051/user_connect`,
+    game: `http://localhost:5051/game`,
 }
+
 
 export default{
     connect(context, payload){
-        return axios.post(urls.userConnect, {
-            mail: payload.mail,
-            password: payload.password
-        })
+        return axios.post(
+            urls.userConnect,{
+                mail: payload.mail,
+                password: payload.password
+            }
+        )
         .then( response => {
-            context.commit('setToken', response.data)
+            console.log(response)
+            if (response.data.statusCode == 200){
+                context.commit('setToken', response.data)
+            }
             return response.data;
         })
         .catch( (err) => {
@@ -81,5 +88,12 @@ export default{
     */
     createGame(context, payload){
         console.log(payload)
+        axios.post(urls.game, payload)
+            .then (response => {
+                console.log('response', response)
+            })
+            .catch( (err) => {
+                console.warn('Couldn"t connect to the server : ', err)
+            })
     }
 }

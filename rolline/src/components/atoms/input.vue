@@ -93,7 +93,7 @@ export default {
     mounted () {
         if (this.password){
             this.$el.oninput = () => {
-                let inputValue = this.$el.children[0].value;
+                let inputValue = this.$el.children[1].value;
                 if (inputValue.length == 0) this.securityLevel = 'Nulle' ;
                 // if (inputValue.length < 6 && inputValue.length > 0) this.securityLevel = 'Insufisant' ;
                 // if (inputValue.length < 8 && inputValue.length > 6) this.securityLevel = 'Correct' ;

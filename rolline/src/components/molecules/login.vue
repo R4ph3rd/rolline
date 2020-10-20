@@ -38,10 +38,9 @@ export default {
             connect: 'connect'
         }),
         connectUser(){
-            
             this.connect({
-                mail: this.$el.children[0].children[0].value,
-                password: this.$el.children[1].children[0].value
+                mail: this.$children[0].$el.children[1].value,
+                password: this.$children[1].$el.children[1].value
             }).then( (rep) => {
                 console.log(rep)
                 if(rep.token){
