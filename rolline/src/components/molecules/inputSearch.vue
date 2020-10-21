@@ -62,7 +62,8 @@ export default {
                 'super',
                 'top',
                 'cool',
-                'aventure'
+                'aventure',
+                'genial'
             ]
         }
     },

@@ -4,12 +4,18 @@ const getUsers = async ({limit = 100, orderKey = 'inscription_date', order = 'de
     return await db.select().from('users').orderBy(orderKey, order).limit(limit);
 }
 
-const getUser = async (infosUser) => {
-    if (infosUser.id){
-        return await db.select().from('users').where('id', infosUser.id).then( async (res) => {
+const getUser = async ({id, pseudo}) => {
+    if (id){
+        return await db.select().from('users').where('id', name).then( async (res) => {
             let games = await db.pluck('game_id').from('users_by_games').where('user_id', res[0].id);
             return {infos_user : res[0], games_id : games}
         })
+    }
+    if (pseudo){
+      return await db.select().from('users').where('pseudo', pseudo).then( async (res) => {
+        // let games = await db.pluck('game_id').from('users_by_games').where('user_id', res[0].id);
+          return res[0];
+      })
     }
 }
 
@@ -21,11 +27,26 @@ const userConnexion = async({mail = '', password = ''} = {}) => {
   return await db.select().from('users').where({'mail': mail, 'password' : password});
 }
 
+const linkUsersToGame = async ({game_id, user_id, arrUsersGame = [{game_id, user_id}]}) => {
+  if (game_id){
+      return await db.insert({'user_id': user_id, 'game_id' : game_id}).into('users_by_games').then (id => {
+          return id;
+      })
+  }
+  else if (arrUsersGame){
+      return await db.insert(arrUsersGame).into('users_by_games').then (id => {
+          return id;
+      })
+  }
+  
+}
+
 module.exports = {
     getUsers,
     getUser,
     createUser,
-    userConnexion
+    userConnexion,
+    linkUsersToGame
 }
 
 
@@ -63,4 +84,4 @@ knex.transaction(function(trx) {
   // nor any of the books inserts will have taken place.
   console.error(error);
 });
-*////////////////
+*///////////////

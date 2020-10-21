@@ -1,5 +1,6 @@
 const db = require('../index');
-const tagQueries = require('./tags');
+const tagQueries = require('./tags');   
+const userQueries = require('./user');   
 
 const getGames = async ({limit = 100, orderKey = 'creation_date', order = 'asc'} = {}) => {
     return await db.select().from('games').orderBy(orderKey, order).limit(limit);
@@ -37,7 +38,22 @@ const createGame = async (query = {}) => {
                 console.log('link', rep)
             });
         })
-        console.log('game create ', game_id)
+
+        await Promise.all(query.players
+            .map( async player => await userQueries.getUser({pseudo : player}))
+        ).then (async arrUsersGame => {
+            arrUsersGame = arrUsersGame.map (item => {
+                return {
+                    user_id : item.id,
+                    game_id : game_id[0]
+                }
+            })
+            console.log('game create ', arrUsersGame)
+
+            await userQueries.linkUsersToGame({arrUsersGame : arrUsersGame}).then(first_row_id => {
+                console.log('not first_row_id', first_row_id)
+            })
+        })
         // tags.forEach( (tag, i) => {
         //     let tagColumn = 'tag_' + i;
         //     await db.insert({'game_id': game_id, tagColumn : tag}).into('tags_by_games')
