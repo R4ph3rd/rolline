@@ -16,13 +16,15 @@
 
       <v-input name="publication" toggle class="publication"></v-input>
 
-      <drop-zone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions" @vdropzone-file-added="test(file)"></drop-zone>
+      <input type="file" id="dropzone" :options="dropzoneOptions" />
+
 
       <v-button class="submit primary rounded large" @click.native="submitGame()"> Créer ma partie </v-button>
+      <v-button class="submit primary rounded large" @click.native="testFile()"> submitphoto</v-button>
     </section>
   </div>
 </template>
-
+// @vdropzone-file-added="test(file)" ref="myVueDropzone"
 <script>
 import input from '@/components/atoms/input'
 import button from '@/components/atoms/button'
@@ -62,7 +64,7 @@ export default {
       createGame : 'createGame'
     }),
     submitGame(){
-      let form = this.$el.children[2].children;
+      console.log(document.getElementById('dropzone').files[0])
       this.createGame({
         name : this.$children[0].$el.children[1].value,
         tags : this.$children[1].selectedPins,
@@ -70,12 +72,26 @@ export default {
         template: this.$children[3].$el.value,
         players : this.$children[4].selectedPins,
         publication : this.$children[5].$el.children[1].checked,
-        cover : this.file
+        cover : document.getElementById('dropzone').files[0]
       });
     },
     test(file, response){
       console.log(file)
       if(response) console.log(response)
+    },
+    testFile(){
+      let file = document.getElementById('dropzone')
+      console.log(file.files[0])
+      if (file){
+        fetch('http://localhost:5051/game/upload_file', {
+          method : 'POST',
+          mode :'cors',
+          body: file.files[0]
+        }).then (rep => {
+          console.log(rep)
+        })
+      }
+      
     }
   }
 }

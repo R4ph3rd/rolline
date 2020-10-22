@@ -1,6 +1,6 @@
 <template>
 <div :class="blockStyle">
-    <label  :for="name">{{name}}</label>
+    <label  :for="name" v-if="!checkbox">{{name}}</label>
     <input :type="type" :class="style"  :value="valueText" :name="name">
     <label :for="name" class="reveal" v-if="password || checkbox" @click="labelClick()">{{checkboxText}}</label>
     <span v-if="toggle" class="control"></span>
@@ -44,6 +44,7 @@ export default {
         blockStyle(){
             if (this.password) return this.securityLevel;
             if (this.toggle) return 'toggleBox'
+            if (this.checkbox) return 'inline_input'
         },
         type(){
             if (this.password) return this.visiblePasswordOrNot ? 'text' :'password' ;
@@ -130,6 +131,11 @@ div{
     border: $r-color-dark04 1px solid;
     box-shadow:$r-shadow-02dp; 
     border-radius: 8px;
+
+    &.inline_input{
+        border: none;
+        box-shadow: none;
+    }
 
     &.toggleBox{
         padding-left:0 !important;

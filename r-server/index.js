@@ -1,4 +1,5 @@
 const Hapi = require('@hapi/hapi');
+const Inert = require('inert');
 require('dotenv').config();
 
 const routes = require('./config/routes')
@@ -12,6 +13,8 @@ const init = async () => {
         },
         debug: { request: ['error'] }
     })
+
+    await server.register(Inert);
 
     await server.start();
     console.log('Server running on %s', server.info.uri)

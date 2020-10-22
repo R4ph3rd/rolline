@@ -38,5 +38,26 @@ module.exports = [
                 }
             }
         }
+    },
+    {
+        method: 'POST',
+        path: '/game/upload_file',
+        options: {
+            payload: {
+              output: 'file',
+              parse : true
+            }
+        },
+        handler: async (request, h) => {
+            console.log('/////////////  ////////////////////////////', request.payload)
+            const {payload} = request ;
+
+
+            return await gameQueries.uploadFile(payload).then (rep => {
+                return rep ;
+            }).catch (err => {
+                return err ;
+            });
+        }
     }
 ]

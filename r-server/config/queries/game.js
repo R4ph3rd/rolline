@@ -1,6 +1,7 @@
 const db = require('../index');
 const tagQueries = require('./tags');   
 const userQueries = require('./user');   
+const fs = require('fs')
 
 const getGames = async ({limit = 100, orderKey = 'creation_date', order = 'asc'} = {}) => {
     return await db.select().from('games').orderBy(orderKey, order).limit(limit);
@@ -61,8 +62,24 @@ const createGame = async (query = {}) => {
     })
 }
 
+
+const uploadFile = async (file) => {
+    console.log(file)
+    return fs.writeFile('../../data/public/game_covers/filename.png', file, err => {
+        if (!err) {
+          console.log('Uploaded!')
+          return 'Uploaded!'
+        } else {
+            console.log('Something went wrong.')
+            return 'Something went wrong.'
+
+        }
+      })
+}
+
 module.exports = {
     getGames,
     getGame,
-    createGame
+    createGame,
+    uploadFile
 }

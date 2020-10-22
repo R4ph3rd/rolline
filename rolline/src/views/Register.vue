@@ -6,22 +6,16 @@
             <h2>Explorez une infinité d'univers de jeux</h2>
             <p>Accès en libre accès ezflhzabfzepib zepif hzepf hzefh uzia pf.</p>
 
-            <label for="name">Mail</label>
-            <v-input name="name">super@mail.com</v-input>
-            
-            <label for="discord_id">Discord ID</label>
-            <v-input name="discord_id">1234</v-input>
-
-            <label for="mdp">Mot de passe</label>
-            <v-input password name="mdp">ghq7k!qs</v-input>
-
-            <label for="repeat_mdp" @click="registerUser()" >Répéter le mot de passe</label>
-            <v-input password name="repeat_mdp">ghq7k!qs</v-input>
+            <v-input name="Mail">super@mail.com</v-input>
+            <v-input name="Name">super@mail.com</v-input>
+            <v-input name="Discord ID">1234</v-input>
+            <v-input password name="Mot de passe">ghq7k!qs</v-input>
+            <v-input password name="Répéter le mot de passe">ghq7k!qs</v-input>
 
             <v-input checkbox name="CGU">J'ai lu et j'accepte les condtions d'utilisation du service.</v-input>
             <span class="alert" v-show="cguValidation">Tu as oublié de te soumettre aux règles édictées par Judge Dead, fougeux aventurier !</span>
 
-            <v-button class="submit" @click.native="registerUser()">Sign In</v-button>
+            <v-button class="submit" @click.native="registerUser()">Sign up</v-button>
 
             <div class="or">
                 <span></span>
@@ -29,33 +23,28 @@
                 <span></span>
             </div>
 
-            <v-button class="signUp" outlined @click.native="goToSignUp()">Sign up</v-button>
+            <v-button class="signUp" outlined @click.native="goToSignUp()">Sign in</v-button>
         </div>
-
-        <button @click="close()"></button>
     </div>
 </template>
 
 <script>
-import input from '../atoms/input'
-import button from '../atoms/button'
+import input from '@/components/atoms/input'
+import button from '@/components/atoms/button'
 import {mapGetters, mapActions} from 'vuex'
 
 export default {
-    name: 'Register',
+    name : 'Register',
+    components: {
+        'v-input': input,
+        'v-button': button
+    },
     data(){
         return{
             cguValidation: false
         }
     },
-    components: {
-        'v-input': input,
-        'v-button': button
-    },
-    computed:{
-        ...mapGetters([''])
-    },
-    methods: {
+    methods:{
         ...mapActions({
             register : 'register',
             getUsers : 'getUsers'
@@ -88,7 +77,6 @@ export default {
     }
 }
 </script>
-
 <style scoped lang="scss">
     .register{
         position: relative;
@@ -96,27 +84,15 @@ export default {
         grid-template-columns: 40vw auto;
 
         width:max-content;
-        min-width: 35vw;
-        max-width: 80vw;
+        width:100%;
         height:max-content;
         border-radius:8px;
-        overflow:hidden;
+        // overflow:hidden;
+        margin-bottom:50px;
 
         // background: $r-layer-04dp;
         box-shadow: $r-shadow-04dp;
         backdrop-filter: blur(12px);
-
-
-        & > button{
-            position: absolute;
-            top: 25px;
-            right:25px;
-            width:24px;
-            height:24px;
-            border-radius:30px;
-            background:white;
-            border:none;
-        }
 
         & .register_infos{
             display:flex;
