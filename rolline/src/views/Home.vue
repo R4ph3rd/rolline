@@ -1,19 +1,16 @@
 <template>
   <div class="home">
     <!-- <v-login></v-login> -->
-    <v-register></v-register>
   </div>
 </template>
 
 <script>
 import login from '../components/molecules/login'
-import register from '../components/molecules/registerForm'
 
 export default {
   name: 'Home',
   components: {
-    'v-login':login,
-    'v-register': register
+    'v-login':login
   }
 }
 </script>

@@ -19,8 +19,8 @@ const getUser = async ({id, pseudo}) => {
     }
 }
 
-const createUser = async ({mail = '', password = '', discord_id = ''}) => {
-    await db.insert({'mail': mail, 'password': password, 'discord_id': discord_id}).into('users');
+const createUser = async ({pseudo = '', mail = '', password = '', discord_id = '', picture = 'https://source.unsplash.com/random/120x120'}) => {
+    return await db.insert({'pseudo': pseudo, 'mail': mail, 'password': password, 'discord_id': discord_id, 'picture' : picture}).into('users');
 }
 
 const userConnexion = async({mail = '', password = ''} = {}) => {

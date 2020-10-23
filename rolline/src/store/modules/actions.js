@@ -29,12 +29,8 @@ export default{
     },
     register(context, payload){
         console.log('Registration demand :', payload)
-        axios.post(urls.user, {
-            mail: payload.mail,
-            discord_id: payload.discord_id,
-            password: payload.password
-        }).then( () => {
-            console.warn('Registration sent to DB !')
+        axios.post(urls.user, payload).then( (rep) => {
+            console.warn('Registration sent to DB !', rep)
         })
     },
     getUsers(context, payload){

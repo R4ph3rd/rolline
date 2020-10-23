@@ -16,10 +16,14 @@ module.exports = [
         method: 'POST',
         path: '/user',
         handler: async (request, h) => {
-            // console.log(request, h)
-            await userQueries.createUser({mail: request.payload.mail, password: request.payload.password, discord_id: request.payload.discord_id});
-            console.log('Insertion made')
-            return 'Insertion made !';
+            console.log(request.payload)
+            return await userQueries.createUser(request.payload).then ( rep => {
+                return 'Insertion made ! ID :', rep;
+
+            })
+            .catch(err => {
+                return err;
+            })
         }
     },
     {

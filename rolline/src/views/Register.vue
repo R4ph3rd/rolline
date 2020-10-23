@@ -10,6 +10,7 @@
             <v-input name="Name">super@mail.com</v-input>
             <v-input name="Discord ID">1234</v-input>
             <v-input password name="Mot de passe">ghq7k!qs</v-input>
+            <span class="alert" v-show="passwordValidation">Les mots de passe ne sont pas identiques.</span>
             <v-input password name="Répéter le mot de passe">ghq7k!qs</v-input>
 
             <v-input checkbox name="CGU">J'ai lu et j'accepte les condtions d'utilisation du service.</v-input>
@@ -41,7 +42,8 @@ export default {
     },
     data(){
         return{
-            cguValidation: false
+            cguValidation: false,
+            passwordValidation : false
         }
     },
     methods:{
@@ -50,19 +52,17 @@ export default {
             getUsers : 'getUsers'
         }),
         registerUser(){
-            // if()
-            let inputsContainer = Array.from(this.$el.children[1].children).filter( child => child.localName == 'div')
-            let cgu = inputsContainer[4].children[0];
-
-            if (cgu.checked){
-                let inputsCollections = inputsContainer.map( input => input.children);
-
-                this.register({
-                    mail : inputsCollections[0][0].value,
-                    discord_id: inputsCollections[1][0].value,
-                    password: inputsCollections[2][0].value
-                });
-
+            if (this.$children[5].$el.children[0].checked){ // cgu
+                if (this.$children[4].$el.children[1].value == this.$children[3].$el.children[1].value){ // check password inputs 
+                    this.register({
+                        mail : this.$children[0].$el.children[1].value,
+                        pseudo: this.$children[1].$el.children[1].value,
+                        discord_id: this.$children[2].$el.children[1].value,
+                        password: this.$children[3].$el.children[1].value
+                    });
+                } else {
+                    this.passwordValidation = !this.passwordValidation;
+                }
             } else {
                 this.cguValidation = !this.cguValidation;
             }
