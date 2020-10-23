@@ -17,8 +17,11 @@ module.exports = [
         path: '/user',
         handler: async (request, h) => {
             console.log(request.payload)
-            return await userQueries.createUser(request.payload).then ( rep => {
-                return 'Insertion made ! ID :', rep;
+            return await userQueries.createUser(request.payload).then ( id => {
+                return {
+                    statusCode : 203,
+                    id : id[0]
+                }
 
             })
             .catch(err => {

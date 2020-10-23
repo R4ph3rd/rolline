@@ -20,11 +20,17 @@ const getUser = async ({id, pseudo}) => {
 }
 
 const createUser = async ({pseudo = '', mail = '', password = '', discord_id = '', picture = 'https://source.unsplash.com/random/120x120'}) => {
-    return await db.insert({'pseudo': pseudo, 'mail': mail, 'password': password, 'discord_id': discord_id, 'picture' : picture}).into('users');
+  return await db.insert({'pseudo': pseudo, 'mail': mail, 'password': password, 'discord_id': discord_id, 'picture' : picture}).into('users');
 }
 
-const userConnexion = async({mail = '', password = ''} = {}) => {
-  return await db.select().from('users').where({'mail': mail, 'password' : password});
+const userConnexion = async({mail = '', password = '', name = ''} = {}) => {
+  if (mail){
+    return await db.select().from('users').where({'mail': mail, 'password' : password});
+  }
+  else if (name){
+    return await db.select().from('users').where({'name': name, 'password' : password});
+  }
+  return 'Please provide mail or name and password to connect.'
 }
 
 const linkUsersToGame = async ({game_id, user_id, arrUsersGame = [{game_id, user_id}]}) => {

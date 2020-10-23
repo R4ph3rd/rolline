@@ -28,9 +28,10 @@ export default{
         })
     },
     register(context, payload){
-        console.log('Registration demand :', payload)
-        axios.post(urls.user, payload).then( (rep) => {
-            console.warn('Registration sent to DB !', rep)
+        return axios.post(urls.user, payload).then( (rep) => {
+            if (rep.data.statusCode == 203){ // means user is registered
+                return rep.data ;
+            }
         })
     },
     getUsers(context, payload){
