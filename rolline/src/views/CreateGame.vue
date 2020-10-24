@@ -16,7 +16,7 @@
 
       <v-input name="publication" toggle class="publication"></v-input>
 
-      <input type="file" id="dropzone" :options="dropzoneOptions" />
+      <input type="file" id="dropzone" :options="dropzoneOptions" accept="image"/>
 
 
       <v-button class="submit primary rounded large" @click.native="submitGame()"> Créer ma partie </v-button>
@@ -82,11 +82,14 @@ export default {
     testFile(){
       let file = document.getElementById('dropzone')
       console.log(file.files[0])
+      const body = new FormData();
+      body.append("file",file.files[0]);
+
       if (file){
         fetch('http://localhost:5051/game/upload_file', {
           method : 'POST',
           mode :'cors',
-          body: file.files[0]
+          body: body
         }).then (rep => {
           console.log(rep)
         })
