@@ -2,24 +2,21 @@ const db = require('../index');
 
 const getTags = async ({id, tags, tag}) => {
     if (id){
-        console.log('id :', id)
         return await db.select().from('tags').where('id', id);
     }
 
     if (tags){
-        console.log('tags :', tags)
         return await db.select().from('tags').whereIn('label', tags);
     }
     
     if (tag){
-        console.log('tag :', tag)
         return await db.select().from('tags').where('label', tag);
     }
 
     return null ;
 }
 
-const createTag = async (tags) => {
+const createTags = async (tags) => {
     return await getTags({tags : tags}).then ( async existingTags => {
         if (existingTags !== null){
             if (existingTags.length > 0 && existingTags.length != tags.length){
@@ -49,6 +46,7 @@ const createTag = async (tags) => {
             }
 
         } else {
+            console.log('super tags !', tags)
             tags = tags.map(tag => {
                 return {label : tag}
             })
@@ -56,7 +54,7 @@ const createTag = async (tags) => {
             /* return await db.insert(tags).into('tags').then(id_tag => {
                 return id_tag
             }) */
-
+            console.log("tags in create ", tags)
             return Promise.all(tags.map(async tag => {
                 return await insertNewtag(tag.label).then(id => {
                     return id
@@ -75,7 +73,7 @@ const insertNewtag = async (tag) => {
 }
 
 const linkTagToGame = async ({game_id, tag_id, arrTagsGame = [{game_id, tag_id}]}) => {
-    if (game_id){
+    if (game_id && tag_id){
         return await db.insert({'tag_id': tag_id, 'game_id' : game_id}).into('tags_by_games').then (id => {
             return id;
         })
@@ -90,6 +88,6 @@ const linkTagToGame = async ({game_id, tag_id, arrTagsGame = [{game_id, tag_id}]
 
 module.exports = {
     getTags,
-    createTag,
+    createTags,
     linkTagToGame
 }

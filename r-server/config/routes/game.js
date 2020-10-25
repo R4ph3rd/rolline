@@ -30,7 +30,7 @@ module.exports = [
 
       if (query != undefined) {
         return await gameQueries.createGame(query).then((rep) => {
-          return "requete effectuée ! game_id : ", rep;
+          return rep;
         });
       } else {
         return {
