@@ -6,6 +6,7 @@ module.exports = [
   {
     method: "GET",
     path: "/game/{game_id?}",
+    
     handler: async (request, h) => {
       if (request.params.game_id) {
         return await gameQueries.getGame({ id: request.params.game_id });
@@ -17,17 +18,19 @@ module.exports = [
   {
     method: "POST",
     path: "/game",
+    options: {
+      payload: {
+        output: "stream",
+        parse: true,
+        multipart: true,
+      },
+    },
     handler: async (request, h) => {
-      let query = undefined;
-
-      if (request.payload) query = request.payload;
-      else if (request.query) query = request.query; // test request
-      else if (h.request.payload) query = h.request.payload;
+      let query = request.payload;;
 
       if (query != undefined) {
         return await gameQueries.createGame(query).then((rep) => {
-          console.log(rep);
-          return "requete effectuée !";
+          return "requete effectuée ! game_id : ", rep;
         });
       } else {
         return {
@@ -66,7 +69,7 @@ module.exports = [
           // return h.code(200);
           return err;
         });
-        return 'Upload done'
+        return `${__dirname}/../../data/public/game_covers/${data.file.hapi.filename}`
       } else {
         return 'Couldn"t upload the file.'
       }

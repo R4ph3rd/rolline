@@ -63,18 +63,25 @@ export default {
   },
   methods: {
     ...mapActions({
-      createGame : 'createGame'
+      createGame : 'createGame',
+      uploadFile : 'uploadFile'
     }),
+    setPathFile(path){
+      this.file = path;
+    },
     submitGame(){
-      this.createGame({
-        name : this.$children[0].$el.children[1].value,
-        tags : this.$children[1].selectedPins,
-        gamemode: this.$children[2].$el.value,
-        template: this.$children[3].$el.value,
-        players : this.$children[4].selectedPins,
-        publication : this.$children[5].$el.children[1].checked,
-        cover : this.file
-      });
+      const body = new FormData();
+      let file = this.$children[6].$el.files[0];
+      if (file) body.append("file",this.$children[6].$el.files[0]);
+
+      body.append('name', this.$children[0].$el.children[1].value)
+      body.append('tags', JSON.stringify(this.$children[1].selectedPins))
+      body.append('gamemode', this.$children[2].$el.value)
+      body.append('template', this.$children[3].$el.value)
+      body.append('players', JSON.stringify(this.$children[4].selectedPins))
+      body.append('publication', this.$children[5].$el.children[1].checked)
+
+      this.createGame(body);
     },
     test(file, response){
       console.log(file)
@@ -84,17 +91,17 @@ export default {
       let file = document.getElementById('dropzone')
       const body = new FormData();
       body.append("file",file.files[0]);
-      console.log(body, file.files[0])
+      body.append('name', this.$children[0].$el.children[1].value)
+      body.append('tags', this.$children[1].selectedPins)
+      body.append('gamemode', this.$children[2].$el.value)
+      body.append('template', this.$children[3].$el.value)
+      body.append('players', this.$children[4].selectedPins)
+      body.append('publication', this.$children[5].$el.children[1].checked)
+      console.log(body)
 
-      if (file){
-        fetch('http://localhost:5051/game/upload_file', {
-          method : 'POST',
-          mode :'cors',
-          body: body
-        }).then (rep => {
-          console.log(rep)
-        })
-      }
+      this.uploadFile(body)
+
+      
       
     }
   }

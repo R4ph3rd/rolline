@@ -85,7 +85,6 @@ export default{
     },
     */
     createGame(context, payload){
-        console.log(payload)
         axios.post(urls.game, payload)
             .then (response => {
                 console.log('response', response)
@@ -95,10 +94,9 @@ export default{
             })
     },
     uploadFile(context, payload){
-        console.log(payload)
-        axios.post(urls.file, payload)
+        return axios.post(urls.file, payload)
         .then(response => {
-            console.log(response)
+            return response;
         })
     }
 }
