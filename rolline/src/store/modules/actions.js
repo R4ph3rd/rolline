@@ -5,6 +5,7 @@ const urls = {
     user : `http://localhost:5051/user`,
     userConnect: `http://localhost:5051/user_connect`,
     game: `http://localhost:5051/game`,
+    file: `http://localhost:5051/upload_file`,
 }
 
 
@@ -92,5 +93,12 @@ export default{
             .catch( (err) => {
                 console.warn('Couldn"t connect to the server : ', err)
             })
+    },
+    uploadFile(context, payload){
+        console.log(payload)
+        axios.post(urls.file, payload)
+        .then(response => {
+            console.log(response)
+        })
     }
 }

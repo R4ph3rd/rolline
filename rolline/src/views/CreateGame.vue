@@ -16,8 +16,8 @@
 
       <v-input name="publication" toggle class="publication"></v-input>
 
-      <input type="file" id="dropzone" :options="dropzoneOptions" accept="image"/>
-
+      <!-- <input type="file" id="dropzone" :options="dropzoneOptions" :onchange="loadFile(e)" accept="image"/> -->
+      <drop-file id="dropzone"></drop-file>
 
       <v-button class="submit primary rounded large" @click.native="submitGame()"> Créer ma partie </v-button>
       <v-button class="submit primary rounded large" @click.native="testFile()"> submitphoto</v-button>
@@ -28,6 +28,7 @@
 <script>
 import input from '@/components/atoms/input'
 import button from '@/components/atoms/button'
+import dropFile from '@/components/atoms/dropFile'
 import list from '@/components/atoms/list'
 import inputSearch from '@/components/molecules/inputSearch'
 
@@ -43,6 +44,7 @@ export default {
     'v-button' : button,
     'input-search' : inputSearch,
     'input-search': inputSearch,
+    'drop-file': dropFile,
     'drop-zone': vue2Dropzone
   },
   data(){
@@ -56,7 +58,7 @@ export default {
       },
       gamemodes : ['cool', 'super', 'top', 'banene', 'mangue'],
       templates : ['DnD', 'shadow runner', 'simple'],
-      file : {}
+      file : ''
     }
   },
   methods: {
@@ -64,7 +66,6 @@ export default {
       createGame : 'createGame'
     }),
     submitGame(){
-      console.log(document.getElementById('dropzone').files[0])
       this.createGame({
         name : this.$children[0].$el.children[1].value,
         tags : this.$children[1].selectedPins,
@@ -72,7 +73,7 @@ export default {
         template: this.$children[3].$el.value,
         players : this.$children[4].selectedPins,
         publication : this.$children[5].$el.children[1].checked,
-        cover : document.getElementById('dropzone').files[0]
+        cover : this.file
       });
     },
     test(file, response){
@@ -81,9 +82,9 @@ export default {
     },
     testFile(){
       let file = document.getElementById('dropzone')
-      console.log(file.files[0])
       const body = new FormData();
       body.append("file",file.files[0]);
+      console.log(body, file.files[0])
 
       if (file){
         fetch('http://localhost:5051/game/upload_file', {

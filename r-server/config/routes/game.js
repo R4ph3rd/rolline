@@ -1,4 +1,5 @@
 const gameQueries = require("../queries/game");
+const uploads = require('../helpers/uploads.js');
 const fs = require("fs");
 
 module.exports = [
@@ -16,13 +17,11 @@ module.exports = [
   {
     method: "POST",
     path: "/game",
-    // headers: {"Access-Control-Allow-Origin": "*"},
     handler: async (request, h) => {
-      // await gameQueries.creatGame({name: request.payload.name, tags: request.payload.tags});
       let query = undefined;
 
       if (request.payload) query = request.payload;
-      else if (request.query) query = request.query;
+      else if (request.query) query = request.query; // test request
       else if (h.request.payload) query = h.request.payload;
 
       if (query != undefined) {
@@ -42,7 +41,7 @@ module.exports = [
   },
   {
     method: "POST",
-    path: "/game/upload_file",
+    path: "/upload_file",
     options: {
       payload: {
         output: "stream",
@@ -52,18 +51,24 @@ module.exports = [
     },
     handler: async (request, h) => {
       const data = request.payload;
+      console.log('upload file :::::::::', data)
 
       if (data.file) {
         const writeStream = fs.createWriteStream(
-          `${__dirname}/uploads/${data.file.hapi.filename}` //change me
+          // `${__dirname}/uploads/${data.file.hapi.filename}` //change me
+          `${__dirname}/../../data/public/game_covers/${data.file.hapi.filename}` //change me
         );
-        writeStream.on("error", (err) => console.log(err));
+        writeStream.on("error", (err) => console.log('ERROR : ', err));
 
         data.file.pipe(writeStream);
 
         data.file.on("end", (err) => {
-          return h.code(200);
+          // return h.code(200);
+          return err;
         });
+        return 'Upload done'
+      } else {
+        return 'Couldn"t upload the file.'
       }
     },
   },

@@ -23,8 +23,8 @@ const getGame = async (game_id) => {
 }
 
 const createGame = async (query = {}) => {
-    console.log(query)
-    await db.insert({'name': query.name, 'invite_link': 'http://raphaelperraud.com', 'cover' : 'https://source.unsplash.com/random/120x120'}).into('games').then( async (game_id) => {
+    // console.log("QUERY :::::::::::::", query)
+    await db.insert({'name': query.name, 'invite_link': 'http://raphaelperraud.com', 'cover' : 'https://source.unsplash.com/random/120x120', 'gamemode_id' : 2, 'template_sheet_id' : 1}).into('games').then( async (game_id) => {
         // insert tags in table
         await tagQueries.createTag(query.tags).then (async rep => {
             let arrTagsGame = rep.map(tag_id => {
@@ -33,7 +33,7 @@ const createGame = async (query = {}) => {
                     game_id : game_id[0]
                 }
             })
-            console.log('tag rep', rep, arrTagsGame)
+            // console.log('tag rep', rep, arrTagsGame)
 
             await tagQueries.linkTagToGame({arrTagsGame : arrTagsGame}).then (rep => {
                 console.log('link', rep)
