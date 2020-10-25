@@ -54,22 +54,9 @@ module.exports = [
     },
     handler: async (request, h) => {
       const data = request.payload;
-      console.log('upload file :::::::::', data)
 
       if (data.file) {
-        const writeStream = fs.createWriteStream(
-          // `${__dirname}/uploads/${data.file.hapi.filename}` //change me
-          `${__dirname}/../../data/public/game_covers/${data.file.hapi.filename}` //change me
-        );
-        writeStream.on("error", (err) => console.log('ERROR : ', err));
-
-        data.file.pipe(writeStream);
-
-        data.file.on("end", (err) => {
-          // return h.code(200);
-          return err;
-        });
-        return `${__dirname}/../../data/public/game_covers/${data.file.hapi.filename}`
+        return helpers.uploadFile(data.file);
       } else {
         return 'Couldn"t upload the file.'
       }

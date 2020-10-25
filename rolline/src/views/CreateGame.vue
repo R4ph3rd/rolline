@@ -16,15 +16,12 @@
 
       <v-input name="publication" toggle class="publication"></v-input>
 
-      <!-- <input type="file" id="dropzone" :options="dropzoneOptions" :onchange="loadFile(e)" accept="image"/> -->
       <drop-file id="dropzone"></drop-file>
 
       <v-button class="submit primary rounded large" @click.native="submitGame()"> Créer ma partie </v-button>
-      <v-button class="submit primary rounded large" @click.native="testFile()"> submitphoto</v-button>
     </section>
   </div>
 </template>
-// @vdropzone-file-added="test(file)" ref="myVueDropzone"
 <script>
 import input from '@/components/atoms/input'
 import button from '@/components/atoms/button'
@@ -32,8 +29,6 @@ import dropFile from '@/components/atoms/dropFile'
 import list from '@/components/atoms/list'
 import inputSearch from '@/components/molecules/inputSearch'
 
-import vue2Dropzone from 'vue2-dropzone'
-import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import { mapActions } from 'vuex'
 
 export default {
@@ -45,30 +40,17 @@ export default {
     'input-search' : inputSearch,
     'input-search': inputSearch,
     'drop-file': dropFile,
-    'drop-zone': vue2Dropzone
   },
   data(){
     return{
-      dropzoneOptions: {
-          url: 'https://httpbin.org/post',
-          thumbnailWidth: 150,
-          maxFilesize: 0.5,
-          headers: { "My-Awesome-Header": "header value" },
-          dictDefaultMessage: "<i class='upload'></i>Drag & drop ton image ici"
-      },
       gamemodes : ['cool', 'super', 'top', 'banene', 'mangue'],
-      templates : ['DnD', 'shadow runner', 'simple'],
-      file : ''
+      templates : ['DnD', 'shadow runner', 'simple']
     }
   },
   methods: {
     ...mapActions({
       createGame : 'createGame',
-      uploadFile : 'uploadFile'
     }),
-    setPathFile(path){
-      this.file = path;
-    },
     submitGame(){
       const body = new FormData();
       let file = this.$children[6].$el.files[0];
@@ -82,27 +64,6 @@ export default {
       body.append('publication', this.$children[5].$el.children[1].checked)
 
       this.createGame(body);
-    },
-    test(file, response){
-      console.log(file)
-      if(response) console.log(response)
-    },
-    testFile(){
-      let file = document.getElementById('dropzone')
-      const body = new FormData();
-      body.append("file",file.files[0]);
-      body.append('name', this.$children[0].$el.children[1].value)
-      body.append('tags', this.$children[1].selectedPins)
-      body.append('gamemode', this.$children[2].$el.value)
-      body.append('template', this.$children[3].$el.value)
-      body.append('players', this.$children[4].selectedPins)
-      body.append('publication', this.$children[5].$el.children[1].checked)
-      console.log(body)
-
-      this.uploadFile(body)
-
-      
-      
     }
   }
 }

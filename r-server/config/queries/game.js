@@ -67,10 +67,7 @@ const createGame = async (query = {}) => {
 
                 await userQueries.linkUsersToGame({arrUsersGame : arrUsersGame});
             })
-            // tags.forEach( (tag, i) => {
-            //     let tagColumn = 'tag_' + i;
-            //     await db.insert({'game_id': game_id, tagColumn : tag}).into('tags_by_games')
-            // })
+
             return 'New game : ', game_id[0] ;
     })
 }
