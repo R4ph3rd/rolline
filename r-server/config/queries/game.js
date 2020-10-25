@@ -29,12 +29,13 @@ const createGame = async (query = {}) => {
     let gamemode = await gamemodeQueries.getGamemode({gamemode : query.gamemode}).then (rep => rep[0].id);
     let template = await templateQueries.getTemplate({template : query.template}).then (rep => rep[0].id);
     let path = 'https://source.unsplash.com/random/120x120';
+    let invite_link = `http://${process.env.HOST}:${process.env.PORT}/invite?${query.name.split}`
 
     if (query.file){
         path = helpers.uploadFile(query.file);
     }
 
-    return await db.insert({'name': query.name, 'invite_link': 'http://raphaelperraud.com', 'cover' : path, 'gamemode_id' : gamemode, 'template_sheet_id' : template}).into('games').then( async (game_id) => {
+    return await db.insert({'name': query.name, 'invite_link': invite_link, 'cover' : path, 'gamemode_id' : gamemode, 'template_sheet_id' : template}).into('games').then( async (game_id) => {
         // insert tags in table, but need to recreate array from JSON string before
         let tags = Array.isArray(query.tags) ? query.tags : JSON.parse(query.tags);
         let existingTags = await tagQueries.getTags({tags : tags});
