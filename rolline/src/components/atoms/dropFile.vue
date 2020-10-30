@@ -40,7 +40,6 @@ export default {
         this.$el.onchange = (event) => {
             this.files = event.target.files;
             const file = event.target.files[0];
-            console.log(this.files)
             let reader = new FileReader();
 
             reader.onload = async (e) => {

@@ -56,7 +56,7 @@ module.exports = [
       const data = request.payload;
 
       if (data.file) {
-        return helpers.uploadFile(data.file);
+        return uploads.uploadFile(data.file);
       } else {
         return 'Couldn"t upload the file.'
       }

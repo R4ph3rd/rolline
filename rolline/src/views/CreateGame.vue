@@ -18,7 +18,11 @@
 
       <drop-file id="dropzone"></drop-file>
 
-      <v-button class="submit primary rounded large" @click.native="submitGame()"> Créer ma partie </v-button>
+      <div class="submitItem">
+        <span v-show="fail" class="alert">Veuillez remplir les champs du formulaire.</span>
+        <v-button class="submit primary rounded large" @click.native="submitGame()"> Créer ma partie </v-button>
+      </div>
+        <v-button class="submit primary rounded large" @click.native="_uploadFile()"> file</v-button>
     </section>
   </div>
 </template>
@@ -44,26 +48,47 @@ export default {
   data(){
     return{
       gamemodes : ['cool', 'super', 'top', 'banene', 'mangue'],
-      templates : ['DnD', 'shadow runner', 'simple']
+      templates : ['DnD', 'shadow runner', 'simple'],
+      fail : false
     }
   },
   methods: {
     ...mapActions({
       createGame : 'createGame',
+      uploadFile : 'uploadFile'
     }),
     submitGame(){
       const body = new FormData();
-      let file = this.$children[6].$el.files[0];
-      if (file) body.append("file",this.$children[6].$el.files[0]);
+      let file = this.$children[6].$el.children[0].files[0];
+      let name = this.$children[0].$el.children[1].value;
+      let tags = this.$children[1].selectedPins;
+      let gamemode = this.$children[2].$el.value;
+      let template = this.$children[3].$el.value;
+      let players = this.$children[4].selectedPins;
+      let publication;
 
-      body.append('name', this.$children[0].$el.children[1].value)
-      body.append('tags', JSON.stringify(this.$children[1].selectedPins))
-      body.append('gamemode', this.$children[2].$el.value)
-      body.append('template', this.$children[3].$el.value)
-      body.append('players', JSON.stringify(this.$children[4].selectedPins))
-      body.append('publication', this.$children[5].$el.children[1].checked)
+      if(name && (gamemode && template) != 'hide'){
+        if (file) body.append("file",file);
 
-      this.createGame(body);
+        body.append('name', )
+        body.append('tags', JSON.stringify(tags))
+        body.append('gamemode', gamemode)
+        body.append('template', template)
+        body.append('players', JSON.stringify(players))
+        body.append('publication', publication)
+
+        this.createGame(body);
+      } else {
+        this.fail = true ;
+      }
+    },
+    _uploadFile(){
+      const body = new FormData();
+      let file = this.$children[6].$el.children[0].files[0];
+      if (file){
+         body.append("file",file);
+         this.uploadFile(body)
+      }
     }
   }
 }
@@ -140,14 +165,22 @@ h2{
     box-shadow: $r-shadow-04dp;
   }
 
-  & .submit{
-    $pad : 40px;
+  & .submitItem{
     grid-column: 2/3;
-    width:max-content;
-    padding-left:$pad;
-    padding-right:$pad;
+    display:flex;
+    justify-content: flex-end;
+    align-items:center;  
+    
+    span{
+      margin-right:50px;
+    }
 
-    justify-self:end;
+    .submit{
+      $pad : 40px;
+      width:max-content;
+      padding-left:$pad;
+      padding-right:$pad;
+    }
   }
 }
 
