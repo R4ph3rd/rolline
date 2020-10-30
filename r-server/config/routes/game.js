@@ -23,6 +23,7 @@ module.exports = [
         output: "stream",
         parse: true,
         multipart: true,
+        maxBytes : process.env.maxBytes
       },
     },
     handler: async (request, h) => {
@@ -50,6 +51,7 @@ module.exports = [
         output: "stream",
         parse: true,
         multipart: true,
+        maxBytes : process.env.maxBigBytes
       },
     },
     handler: async (request, h) => {
