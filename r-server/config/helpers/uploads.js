@@ -2,12 +2,10 @@ const fs = require('fs');
 
 module.exports =  {
 
-    uploadFile : (file) => {
-        const folder = `${__dirname}/../../data/public/game_covers/`;
+    uploadFile : (file, dir) => {
+        const folder = dir ? `${__dirname}/../../data/${dir}` : `${__dirname}/../../data/public/game_covers/`;
         let files = fs.readdirSync(folder);
         let i = 0;
-
-        // console.log(file)
 
         while (files.includes(file.hapi.filename)){
             file.hapi.filename = file.hapi.filename.split('.')[0] + `-(${i}).` + file.hapi.filename.split('.')[1]; 
@@ -18,7 +16,7 @@ module.exports =  {
             // `${__dirname}/uploads/${data.file.hapi.filename}` //change me
             `${folder}${file.hapi.filename}` //change me
         );
-        // console.log('stream :', writeStream)
+
         writeStream.on("error", (err) => console.log('ERROR : ', err));
 
         file.pipe(writeStream);
@@ -41,10 +39,4 @@ module.exports =  {
 
         return `${__dirname}/../../data/public/game_covers/${file.hapi.filename}`;
     },
-
-    getFilesizeInBytes : (filename) => {
-        var stats = fs.statSync(filename)
-        var fileSizeInBytes = stats["size"]
-        return fileSizeInBytes
-    }
 }

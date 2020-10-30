@@ -81,5 +81,26 @@ module.exports = [
             }
             
         }
-    }
+    },
+    {
+        method: "POST",
+        path: "/{user}/upload_file",
+        options: {
+          payload: {
+            output: "stream",
+            parse: true,
+            multipart: true,
+            maxBytes : process.env.maxBigBytes
+          },
+        },
+        handler: async (request, h) => {
+          const data = request.payload;
+    
+          if (data.file) {
+            return uploads.uploadFile(data.file, `users/${user}`);
+          } else {
+            return 'Couldn"t upload the file.'
+          }
+        },
+      },
 ]
