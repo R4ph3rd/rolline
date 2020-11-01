@@ -22,7 +22,6 @@
         <span v-show="fail" class="alert">Veuillez remplir les champs du formulaire.</span>
         <v-button class="submit primary rounded large" @click.native="submitGame()"> Créer ma partie </v-button>
       </div>
-        <v-button class="submit primary rounded large" @click.native="_uploadFile()"> file</v-button>
     </section>
   </div>
 </template>
@@ -55,7 +54,6 @@ export default {
   methods: {
     ...mapActions({
       createGame : 'createGame',
-      uploadFile : 'uploadFile'
     }),
     submitGame(){
       const body = new FormData();
@@ -65,12 +63,12 @@ export default {
       let gamemode = this.$children[2].$el.value;
       let template = this.$children[3].$el.value;
       let players = this.$children[4].selectedPins;
-      let publication;
+      let publication = this.$children[5].$el.children[1].checked;
 
       if(name && (gamemode && template) != 'hide'){
         if (file) body.append("file",file);
 
-        body.append('name', )
+        body.append('name', name)
         body.append('tags', JSON.stringify(tags))
         body.append('gamemode', gamemode)
         body.append('template', template)
@@ -78,16 +76,9 @@ export default {
         body.append('publication', publication)
 
         this.createGame(body);
+        // console.log(name, tags, gamemode, template, players, publication, this.$children)
       } else {
         this.fail = true ;
-      }
-    },
-    _uploadFile(){
-      const body = new FormData();
-      let file = this.$children[6].$el.children[0].files[0];
-      if (file){
-         body.append("file",file);
-         this.uploadFile(body)
       }
     }
   }
