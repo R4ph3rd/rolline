@@ -54,7 +54,7 @@ const createGame = async (query = {}) => {
             })
 
         //same for players array
-        let players = Array.isArray(query.players) ? query.players : JSON.parse(query.players);
+        /* let players = Array.isArray(query.players) ? query.players : JSON.parse(query.players);
         await Promise.all(players
             .map( async player => await userQueries.getUser({pseudo : player}))
             ).then (async arrUsersGame => {
@@ -66,8 +66,7 @@ const createGame = async (query = {}) => {
                 })
 
                 await userQueries.linkUsersToGame({arrUsersGame : arrUsersGame});
-            })
-
+            })*/
             return 'New game : ', game_id[0] ;
     })
 }

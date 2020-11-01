@@ -6,11 +6,14 @@ module.exports =  {
         const folder = dir ? `${__dirname}/../../data/${dir}` : `${__dirname}/../../data/public/game_covers/`;
         let files = fs.readdirSync(folder);
         let i = 0;
+        let newFileName = file.hapi.filename;
 
-        while (files.includes(file.hapi.filename)){
-            file.hapi.filename = file.hapi.filename.split('.')[0] + `-(${i}).` + file.hapi.filename.split('.')[1]; 
+        while (files.includes(newFileName)){
             i ++ ;
+            newFileName = file.hapi.filename.split('.')[0] + `-(${i}).` + file.hapi.filename.split('.')[1];
         }
+        file.hapi.filename = newFileName;
+
 
         const writeStream = fs.createWriteStream(
             // `${__dirname}/uploads/${data.file.hapi.filename}` //change me
