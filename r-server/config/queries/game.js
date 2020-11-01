@@ -13,9 +13,10 @@ const getGame = async (game_id) => {
     let tags = await db.pluck('tag_id').from('tags_by_games').where('game_id', game_id.id);
     return await Promise.all([
         db.select().from('games').where('id', game_id.id),
-        db.pluck('label').from('tags').where('id', tags[0]).orWhere('id', tags[1]).orWhere('id', tags[2]),
+        db.pluck('label').from('tags').whereIn('id', tags),
         db.select().from('users_by_games').where('game_id', game_id.id)
     ]).then( responses => {
+        // console.log(responses)
         return {
             game_infos : responses[0][0],
             game_tags : Object.values(responses[1]),
@@ -29,7 +30,7 @@ const createGame = async (query = {}) => {
     let gamemode = await gamemodeQueries.getGamemode({gamemode : query.gamemode}).then (rep => rep[0].id);
     let template = await templateQueries.getTemplate({template : query.template}).then (rep => rep[0].id);
     let path = 'https://source.unsplash.com/random/120x120';
-    let invite_link = `http://${process.env.HOST}:${process.env.PORT}/invite?${query.name.split}`
+    let invite_link = `http://${process.env.HOST}:${process.env.PORT}/invite?${query.name}`
 
     if (query.file){
         path = helpers.uploadFile(query.file);

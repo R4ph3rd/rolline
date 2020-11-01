@@ -76,7 +76,9 @@ export default {
               // description : rep.data.game_infos[0].description
             })
           })
+        // console.log(rep)
         })
+        console.log(response)
       })
 
       if (!this.isConnected){

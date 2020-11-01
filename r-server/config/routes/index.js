@@ -1,8 +1,5 @@
-const user = require('../queries/user')
 const userRoutes = require('./user')
 const gameRoutes = require('./game')
+const assetsRoutes = require('./assets')
 
-// const fs = require('fs');
-
-
-module.exports = [].concat(userRoutes, gameRoutes)
+module.exports = [].concat(userRoutes, gameRoutes, assetsRoutes)

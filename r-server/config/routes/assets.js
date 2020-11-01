@@ -1,15 +1,11 @@
-// const assetsQueries = require('../queries/assets');
+const assetsQueries = require('../queries/assets');
 
 module.exports = [
     {
         method: 'GET',
-        path: '/{user?}/assets/all',
+        path: '/assets/{user}',
         handler: async (request, h) => {
-            /* if (request.params.user){
-                return await assetsQueries.getUser({id: request.params.user});
-            } else {
-                return await assetsQueries.getUsers();
-            } */
+            return await assetsQueries.getAssets(request.params.user);
         }
     },
 ]
