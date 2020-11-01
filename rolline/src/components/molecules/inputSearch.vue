@@ -37,6 +37,10 @@ export default {
             type: String,
             required: false
         },
+        data: {
+            type: Array,
+            required: true
+        },
         autocomplete: {
             type: Boolean,
             required: false
@@ -46,31 +50,13 @@ export default {
         return {
             paddingPins: 0,
             selectedPins : [],
-            predictions : [],
-            list: [
-                'Michel Barnier',
-                'Michel Tout court',
-                'Alexandre Aster',
-                'Stéphane',
-                'Zimbra',
-                'yougoslavie',
-                'hector',
-                'arthur',
-                'kaamelott',
-                'perceval',
-                'provencal',
-                'super',
-                'top',
-                'cool',
-                'aventure',
-                'genial'
-            ]
+            predictions : []
         }
     },
     methods:{
         typingInSearch(inputValue){
             if (inputValue.length >= 1){
-                let filteredlist = this.list;
+                let filteredlist = this.data;
                 this.selectedPins.forEach(pin => {
                     filteredlist.splice(filteredlist.findIndex(item => item == pin), 1)
                 })

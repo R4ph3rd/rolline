@@ -5,14 +5,14 @@
 
     <section class="form">
       <v-input name="Nom de la partie" class="name">Chroniques oubliées</v-input>
-      <input-search name="Tags affiliés" autocomplete class="tags">Super</input-search>
+      <input-search name="Tags affiliés" autocomplete class="tags" :data="tags">Super</input-search>
 
       <div class="inline_inputs">
         <v-list name="Mode de jeu" class="gamemode" :list="gamemodes"></v-list>
         <v-list name="Template de la fiche de personnage" class="template" :list="templates"></v-list>
       </div>
 
-      <input-search name="Joueurs invités" autocomplete class="players">Super</input-search>
+      <input-search name="Joueurs invités" autocomplete class="players" :data="players">Super</input-search>
 
       <v-input name="publication" toggle class="publication"></v-input>
 
@@ -48,6 +48,8 @@ export default {
     return{
       gamemodes : ['cool', 'super', 'top', 'banene', 'mangue'],
       templates : ['DnD', 'shadow runner', 'simple'],
+      players : ['top', 'super', 'cool', 'genial', 'tropcool'],
+      tags: ['SF', 'Fantasy', 'thriller', 'policier', 'CO', 'aventure', 'historique', 'médieval', 'super', 'yougoslavie'],
       fail : false
     }
   },
