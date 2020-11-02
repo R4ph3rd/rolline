@@ -1,5 +1,6 @@
 const Hapi = require('@hapi/hapi');
-const Inert = require('inert');
+const Inert = require('@hapi/inert');
+const Path = require('path');
 require('dotenv').config();
 
 const routes = require('./config/routes')
@@ -9,7 +10,10 @@ const init = async () => {
         port: process.env.PORT /*8181*/ ,
         host: process.env.HOST /*localhost*/,
         routes: {
-            cors: true
+            cors: true,
+            /* files: {
+                relativeTo: Path.join(__dirname, 'data')
+            } */
         },
         debug: { request: ['error'] }
     })
@@ -20,6 +24,17 @@ const init = async () => {
     console.log('Server running on %s', server.info.uri)
 
     server.route(routes)
+
+    server.route({
+        method: 'GET',
+        path: '/assets/{file*}',
+        handler: {
+            directory:{
+                path: 'data/users/1/images',
+                listing: true
+            }
+        }
+    })
 }
 
 process.on('unhandledRejection', (err) => {
