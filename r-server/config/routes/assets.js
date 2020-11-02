@@ -1,15 +1,15 @@
 const assetsQueries = require('../queries/assets');
-
 module.exports = [
-    /* {
+    {
         method: 'GET',
-        path: '/assets/{file*}',
+        path: '/assets/1/{file*}',
         handler: {
             directory:{
-                path: 'data/users'
+                path: './data/users/1/images',
+                listing: true
             }
         }
-    }, */
+    },
     {
         method: 'GET',
         path: '/assets/{user}',

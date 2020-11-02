@@ -25,16 +25,16 @@ const init = async () => {
 
     server.route(routes)
 
-    server.route({
+    /* server.route({
         method: 'GET',
-        path: '/assets/{file*}',
+        path: '/assets/1/{file*}',
         handler: {
-            directory:{
+            directory : {
                 path: 'data/users/1/images',
-                listing: true
+                // listing: true
             }
         }
-    })
+    }) */
 }
 
 process.on('unhandledRejection', (err) => {
