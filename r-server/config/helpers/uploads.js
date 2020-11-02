@@ -1,9 +1,8 @@
 const fs = require('fs');
 
 module.exports =  {
-
     uploadFile : (file, dir) => {
-        const folder = dir ? `${__dirname}/../../data/${dir}` : `${__dirname}/../../data/public/game_covers/`;
+        const folder = dir ? `${__dirname}/../../${dir}` : `${__dirname}/../../data/public/common/`;
         let files = fs.readdirSync(folder);
         let i = 0;
         let newFileName = file.hapi.filename;

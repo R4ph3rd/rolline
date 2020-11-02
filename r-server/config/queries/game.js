@@ -33,7 +33,7 @@ const createGame = async (query = {}) => {
     let invite_link = `http://${process.env.HOST}:${process.env.PORT}/invite?${query.name}`
 
     if (query.file){
-        path = helpers.uploadFile(query.file);
+        path = helpers.uploadFile(query.file, 'public/game_covers');
     }
 
     return await db.insert({'name': query.name, 'invite_link': invite_link, 'cover' : path, 'gamemode_id' : gamemode, 'template_sheet_id' : template}).into('games').then( async (game_id) => {
