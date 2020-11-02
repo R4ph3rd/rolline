@@ -24,17 +24,6 @@ const init = async () => {
     console.log('Server running on %s', server.info.uri)
 
     server.route(routes)
-
-    /* server.route({
-        method: 'GET',
-        path: '/assets/1/{file*}',
-        handler: {
-            directory : {
-                path: 'data/users/1/images',
-                // listing: true
-            }
-        }
-    }) */
 }
 
 process.on('unhandledRejection', (err) => {
