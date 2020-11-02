@@ -15,8 +15,8 @@ module.exports = [
         handler: (request, h) => {
             let audioExt = ['mp3', 'wav'];
             let imageExt = ['png', 'jpg', 'gif', 'jpeg'];
-            audioExt = audioExt.map (audio => new RegExp(audio, 'i'))
-            imageExt = imageExt.map (img => new RegExp(img, 'i'))
+            audioExt = audioExt.map (audio => new RegExp(audio + '$', 'i'))
+            imageExt = imageExt.map (img => new RegExp(img + '$', 'i'))
 
             if (audioExt.some( audio => audio.test(request.params.file))){
                 return h.file(`data/users/${request.params.user}/audio/${request.params.file}`);
