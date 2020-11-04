@@ -14,7 +14,7 @@ const getAsset = async ({userID, assetID, label}) => {
     }
 }
 
-const uploadAsset = ({userID, file, label}) => {
+const uploadAsset = async ({userID, file, label}) => {
     let path = helpers.uploadFile(file, `data/users/${userID}/${helpers.findType(file.hapi.filename)}`);
 
     await db.insert({label : label, path : path, owner_id : userID}).into('assets').then (id => {
