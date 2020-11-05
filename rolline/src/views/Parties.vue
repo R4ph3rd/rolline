@@ -16,6 +16,8 @@
       </v-grid>
     </section>
 
+    <img src="/home/r4ph3rd/Documents/rolline/r-server/config/helpers/../../data/public/game_covers/56eb1d9422a0c6c2df9f0d37059ffbad-(4).jpg" alt="">
+
     <section class="public_parties">
       <h2>Des histoires qui n'attendent que toi, aventurier !</h2>
       <v-grid :cols="4" :cards="public_games">

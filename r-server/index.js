@@ -16,7 +16,10 @@ const init = async () => {
         port: process.env.PORT /*8181*/ ,
         host: process.env.HOST /*localhost*/,
         routes: {
-            cors: true
+            cors: true,
+            /* files: {
+                relativeTo: Path.join(__dirname, 'data')
+            } */
         },
         debug: { request: ['error'] }
     })
