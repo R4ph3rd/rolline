@@ -4,22 +4,35 @@ const helpers = require('../helpers/types');
 module.exports = [
     {
         method: 'GET',
-        path: '/assets/{user}/{file}',
-        handler: (request, h) => {
-            if( helpers.typeFinder(request.params.file) == 'audio'){
-                return h.file(`data/users/${request.params.user}/audio/${request.params.file}`);
-            } else if( helpers.typeFinder(request.params.file) == 'image'){
-                return h.file(`data/users/${request.params.user}/images/${request.params.file}`);
+        path: '/assets/{user}/{file?}',
+        handler: async (request, h) => {
+            if (request.params.file){
+                if( helpers.typeFinder(request.params.file) == 'audio'){
+                    return h.file(`data/users/${request.params.user}/audio/${request.params.file}`);
+                } else if( helpers.typeFinder(request.params.file) == 'image'){
+                    return h.file(`data/users/${request.params.user}/images/${request.params.file}`);
+                } else {
+                    return h.file('404.html').code(404);
+                }
             } else {
-                return h.file('404.html').code(404);
+                return await assetsQueries.getAssets(request.params.user);
             }
         }
     },
     {
-        method: 'GET',
-        path: '/assets/{user}',
+        method: 'POST',
+        path: '/assets',
+        config: {
+            auth: 'jwt'
+        },
         handler: async (request, h) => {
-            return await assetsQueries.getAssets(request.params.user);
+            console.log(request)
+            return 'cooll'
+            /* return await assetsQueries.uploadAsset({
+                userID:2,
+                file: request.file,
+                label : 'null'
+            }); */
         }
     },
 ]
