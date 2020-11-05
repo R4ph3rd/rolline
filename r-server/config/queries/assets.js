@@ -15,9 +15,9 @@ const getAsset = async ({userID, assetID, label}) => {
 }
 
 const uploadAsset = async ({userID, file, label}) => {
-    let path = helpers.uploadFile(file, `data/users/${userID}/${helpers.findType(file.hapi.filename)}`);
+    let path = helpers[0].uploadFile(file, `data/users/${userID}/${helpers[1].typeFinder(file.hapi.filename)}s/`); // TODO : changer l'accessibilité aux helpers pour éviter de sélectionner l'index du tbaleau formé par concat
 
-    await db.insert({label : label, path : path, owner_id : userID}).into('assets').then (id => {
+    return await db.insert({label : label, path : path, owner_id : userID}).into('assets').then (id => {
         return id;
     })
 }

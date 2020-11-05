@@ -6,8 +6,10 @@ module.exports = {
         console.log("decoded", decoded)
         if(decoded.mail){
           if(await userQueries.getUser({mail: decoded.mail})){
-            console.log(await userQueries.getUser({mail: decoded.mail}))
-            return { isValid: true };
+            return { 
+              isValid: true,
+              credentials : await userQueries.getUser({mail: decoded.mail})
+            };
           } else {
             return { isValid: false };
           }

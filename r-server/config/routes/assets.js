@@ -22,17 +22,25 @@ module.exports = [
     {
         method: 'POST',
         path: '/assets',
-        config: {
-            auth: 'jwt'
-        },
+        options: {
+            auth: 'jwt',
+            payload: {
+              output: "stream",
+              parse: true,
+              multipart: true,
+              maxBytes : process.env.maxBytes
+            },
+          },
         handler: async (request, h) => {
-            console.log(request)
-            return 'cooll'
-            /* return await assetsQueries.uploadAsset({
-                userID:2,
-                file: request.file,
+            console.log('-----------------  UPLOAD FILE --------------------')
+            // console.log('file : ', request.payload.file)
+            console.log('token:', request.auth.token);
+            console.log('credentiels:', request.auth.credentials);
+            return await assetsQueries.uploadAsset({
+                userID: request.auth.credentials.id,
+                file: request.payload.file,
                 label : 'null'
-            }); */
+            });
         }
     },
 ]
