@@ -18,6 +18,9 @@ module.exports = [
   {
     method: "POST",
     path: "/game",
+    config:{
+      auth: 'jwt'
+    },
     options: {
       payload: {
         output: "stream",

@@ -1,9 +1,15 @@
-const Hapi = require('@hapi/hapi');
-const Inert = require('@hapi/inert');
-const Path = require('path');
 require('dotenv').config();
+const Hapi = require('@hapi/hapi');
+const Jwt = require('hapi-auth-jwt2');
+const token = require('jsonwebtoken');
+const auth = require('./config/auth');
 
 const routes = require('./config/routes')
+
+// bring your own validation function
+const validate = async function (decoded, request, h) {
+    return {isValid : true};
+};
 
 const init = async () => {
     const server = Hapi.server({
@@ -18,7 +24,17 @@ const init = async () => {
         debug: { request: ['error'] }
     })
 
-    await server.register(Inert);
+    // Authentification
+    await server.register(Jwt);
+    server.auth.strategy('jwt', 'jwt', { 
+            key: process.env.SECRET_KEY, 
+            validate : auth.validate,
+            verifyOptions: { ignoreExpiration: true }
+        }
+    );
+
+    // Auth needed by default for all routes
+    // server.auth.default('jwt');
 
     await server.start();
     console.log('Server running on %s', server.info.uri)

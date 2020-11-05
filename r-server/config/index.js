@@ -8,6 +8,7 @@ const knex =  require('knex')({
     }
 })
 
+console.log(process.env.DB_USER, process.env.DB_PASSWORD)
 knex.raw('select 1+1 as result').then(function () {
     // there is a valid connection in the pool
     console.log('knex is connected to DB');
