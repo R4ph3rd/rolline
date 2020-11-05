@@ -32,10 +32,10 @@ module.exports = [
             },
           },
         handler: async (request, h) => {
-            console.log('-----------------  UPLOAD FILE --------------------')
-            // console.log('file : ', request.payload.file)
+            /* console.log('-----------------  UPLOAD FILE --------------------')
+            console.log('file : ', request.payload.file)
             console.log('token:', request.auth.token);
-            console.log('credentiels:', request.auth.credentials);
+            console.log('credentiels:', request.auth.credentials); */
             return await assetsQueries.uploadAsset({
                 userID: request.auth.credentials.id,
                 file: request.payload.file,

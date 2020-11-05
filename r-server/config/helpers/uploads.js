@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 module.exports =  {
-    uploadFile : (file, dir) => {
+    uploadFile : async (file, dir) => {
         const folder = dir ? `${__dirname}/../../${dir}` : `${__dirname}/../../data/public/common/`;
         let files = fs.readdirSync(folder);
         let i = 0;
@@ -36,9 +36,9 @@ module.exports =  {
 
         file.on("end", (err) => {
             // return h.code(200);
-            return err;
+            return fs.statSync(`${__dirname}/../../${dir}/${file.hapi.filename}`);
         });
 
-        return `${__dirname}/../../data/public/game_covers/${file.hapi.filename}`;
+        return `${__dirname}/../../${dir}/${file.hapi.filename}`;
     },
 }

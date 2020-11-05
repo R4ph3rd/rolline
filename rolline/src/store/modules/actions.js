@@ -1,10 +1,10 @@
 import axios from 'axios'
 
 const urls = {
-    user : `http://localhost:5050/user`,
-    userConnect: `http://localhost:5050/user_connect`,
-    game: `http://localhost:5050/game`,
-    file: `http://localhost:5050/upload_file`,
+    user : `http://localhost:5051/user`,
+    userConnect: `http://localhost:5051/user_connect`,
+    game: `http://localhost:5051/game`,
+    file: `http://localhost:5051/upload_file`,
 }
 
 console.log('host :', process.env.PORT)
