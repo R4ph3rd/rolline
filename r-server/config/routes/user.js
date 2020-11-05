@@ -1,9 +1,14 @@
 const userQueries = require('../queries/user');
+const Jwt = require('hapi-auth-jwt2');
+const token = require('jsonwebtoken');
 
 module.exports = [
     {
         method: 'GET',
         path: '/user/{user?}',
+        config: {
+            auth : 'jwt'
+        },
         handler: async (request, h) => {
             if (request.params.user){
                 return await userQueries.getUser({id: request.params.user});
@@ -33,6 +38,7 @@ module.exports = [
         method: 'POST',
         path: '/user_connect',
         handler: async (request, h) => {
+            console.log('---------------- USER CONNECT REQUEST -------------------')
             let query = {
                 mail : undefined,
                 password : undefined
@@ -42,14 +48,8 @@ module.exports = [
                 query.mail = request.payload.mail ;
                 query.password = request.payload.password;
             }
-            else if (request.query){
-                query.mail = request.query.mail ;
-                query.password = request.query.password;
-            }
-            else if (h.request.payload){
-                query.mail = h.request.payload.mail ;
-                query.password = h.request.payload.password;
-            }
+
+            console.log("query", query)
 
             if (query.mail != undefined){
                 return await userQueries.userConnexion(query).then( rep => {
@@ -62,7 +62,7 @@ module.exports = [
                     } else if (rep.length == 1){
                         return {
                             statusCode : 200,
-                            token : 'ohhAUHG398uyjhgau86YGigAYGhG7102U6gbs6IghjUTA7t62h'
+                            token : token.sign(query, process.env.SECRET_KEY)
                         } ;
                     } else {
                         return {

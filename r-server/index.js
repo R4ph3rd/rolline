@@ -1,8 +1,8 @@
+require('dotenv').config();
 const Hapi = require('@hapi/hapi');
 const Jwt = require('hapi-auth-jwt2');
 const token = require('jsonwebtoken');
 const auth = require('./config/auth');
-require('dotenv').config();
 
 const routes = require('./config/routes')
 
@@ -30,7 +30,8 @@ const init = async () => {
         }
     );
 
-    server.auth.default('jwt');
+    // Auth needed by default for all routes
+    // server.auth.default('jwt');
 
     await server.start();
     console.log('Server running on %s', server.info.uri)
