@@ -85,8 +85,13 @@ export default{
     },
     */
     createGame(context, payload){
-        axios.post(urls.game, payload)
-            .then (response => {
+        console.log(localStorage.token)
+        axios({
+            method: 'post',
+            url: urls.game,
+            authorization: localStorage.token,
+            data: payload
+        }).then (response => {
                 console.log('response', response)
             })
             .catch( (err) => {
