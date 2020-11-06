@@ -5,32 +5,26 @@ const fs = require("fs");
 module.exports = [
   {
     method: "GET",
-    path: "/game/{game_id?}",
+    path: "/game/{game_id}",
     
     handler: async (request, h) => {
-      if (request.params.game_id) {
-        return await gameQueries.getGame({ id: request.params.game_id });
-      } else {
-        return await gameQueries.getGames();
-      }
+      return await gameQueries.getGame({ id: request.params.game_id });
     },
   },
   {
     method: "GET",
-    path: "/game/tags",
+    path: "/games",
     handler: async (request, h) => {
-      console.log('------------------- TAGS GAMES --------------------')
-      // console.log(request)
-      // console.log('payload : ', request.payload, ' query :', request.query, 'params : ', request.params)
-      
-      let tags = [];
-      if(request.query.tags) tags = JSON.parse(request.query.tags);
-      if(request.payload) tags = JSON.parse(request.payload.tags);
+      // console.log('------------------- GAMES --------------------')
 
-      if(request.query.filterMode){
-        return await gameQueries.getGamesByTags({tags : tags, filterMode : request.query.filterMode})
+      if (request.query.tags) {
+        if(request.query.filterMode){
+          return await gameQueries.getGamesByTags({tags : JSON.parse(request.query.tags), filterMode : request.query.filterMode})
+        } else {
+          return await gameQueries.getGamesByTags({tags : JSON.parse(request.query.tags)})
+        } 
       } else {
-        return await gameQueries.getGamesByTags({tags : tags})
+        return await gameQueries.getGames();
       }
     },
   },

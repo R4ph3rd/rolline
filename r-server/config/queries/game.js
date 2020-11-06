@@ -4,7 +4,6 @@ const userQueries = require('./user');
 const gamemodeQueries = require('./gamemodes');
 const templateQueries = require('./template');
 const helpers = require('../helpers/uploads');
-const { from } = require('../index');
 
 const getGames = async ({limit = 100, orderKey = 'creation_date', order = 'asc'} = {}) => {
     return await db.select().from('games').orderBy(orderKey, order).limit(limit);
