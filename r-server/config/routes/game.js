@@ -23,6 +23,13 @@ module.exports = [
         } else {
           return await gameQueries.getGamesByTags({tags : JSON.parse(request.query.tags)})
         } 
+      } 
+      else if (request.query.players) {
+        if(request.query.filterMode){
+          return await gameQueries.getGamesByPlayers({players : JSON.parse(request.query.players), filterMode : request.query.filterMode})
+        } else {
+          return await gameQueries.getGamesByPlayers({players : JSON.parse(request.query.players)})
+        } 
       } else {
         return await gameQueries.getGames();
       }

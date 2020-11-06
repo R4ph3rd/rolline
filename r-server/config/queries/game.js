@@ -25,6 +25,31 @@ const getGame = async ({id}) => {
     }) ;
 }
 
+const getGamesByPlayers = async ({players, filterMode = false}) => { //filter on true : tag && tag // on false : tag || tag
+    return await db.pluck('id').from('users').whereIn('pseudo', players).then (async users_id => {
+            return await db.select().from('users_by_games').whereIn('user_id', users_id).then(async games_users => {
+                if (filterMode){
+                    // console.log(games_tags, tags, filterMode)
+                    let filteredGames = games_users.map( raw => {
+                        return {
+                            game_id : raw.game_id,
+                            users : (games_users.filter( g => g.game_id == raw.game_id)).map( g => g.user_id)
+                        }
+                    }).filter(game => game.users.length >= players.length) // pas besoin de retirer les doublons, la query mysql ne renvoie qu'un résultat par identifiant juste
+        
+                    return await db.select().from('games').whereIn('id', filteredGames.map(g => g.game_id)).then( games => {
+                        return games
+                    })
+                } else {
+                return await db.select().from('games').whereIn('id', games_tags.map(g => g.game_id)).then( games => {
+                    return games
+                })
+            }
+        })
+    })
+} 
+
+
 const getGamesByTags = async ({tags, filterMode = false}) => { //filter on true : tag && tag // on false : tag || tag
     return await db.pluck('id').from('tags').whereIn('label', tags).then (async tags_id => {
             return await db.select().from('tags_by_games').whereIn('tag_id', tags_id).then(async games_tags => {
@@ -100,5 +125,6 @@ module.exports = {
     getGames,
     getGame,
     createGame,
-    getGamesByTags
+    getGamesByTags,
+    getGamesByPlayers
 }
