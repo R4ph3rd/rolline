@@ -30,19 +30,19 @@ const getGamesByTags = async ({tags, filterMode = false}) => { //filter on true 
     return await db.pluck('id').from('tags').whereIn('label', tags).then (async tags_id => {
             return await db.select().from('tags_by_games').whereIn('tag_id', tags_id).then(async games_tags => {
                 if (filterMode){
-                    console.log(games_tags, tags, filterMode)
-                    let filteredGames = games_tags.filter( raw => {
-                        return games_tags.map( g => g.game_id).includes(raw.game_id) // TODO : repérer lesrépétitinos pour vérifier si une game a tous les tags
-                    })
-
-                    console.log('filtered', filteredGames)
+                    // console.log(games_tags, tags, filterMode)
+                    let filteredGames = games_tags.map( raw => {
+                        return {
+                            game_id : raw.game_id,
+                            tags : (games_tags.filter( g => g.game_id == raw.game_id)).map( g => g.tag_id)
+                        }
+                    }).filter(game => game.tags.length >= tags.length) // pas besoin de retirer les doublons, la query mysql ne renvoie qu'un résultat par identifiant juste
         
-                    return {tags, filterMode}
+                    return await db.select().from('games').whereIn('id', filteredGames.map(g => g.game_id)).then( games => {
+                        return games
+                    })
                 } else {
                 return await db.select().from('games').whereIn('id', games_tags.map(g => g.game_id)).then( games => {
-                    games.forEach( async game => {
-                        console.log(await getGame({id: game.id}))
-                    })
                     return games
                 })
             }
