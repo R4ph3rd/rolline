@@ -16,6 +16,25 @@ module.exports = [
     },
   },
   {
+    method: "GET",
+    path: "/game/tags",
+    handler: async (request, h) => {
+      console.log('------------------- TAGS GAMES --------------------')
+      // console.log(request)
+      // console.log('payload : ', request.payload, ' query :', request.query, 'params : ', request.params)
+      
+      let tags = [];
+      if(request.query.tags) tags = JSON.parse(request.query.tags);
+      if(request.payload) tags = JSON.parse(request.payload.tags);
+
+      if(request.query.filterMode){
+        return await gameQueries.getGamesByTags({tags : tags, filterMode : request.query.filterMode})
+      } else {
+        return await gameQueries.getGamesByTags({tags : tags})
+      }
+    },
+  },
+  {
     method: "POST",
     path: "/game",
     options: {

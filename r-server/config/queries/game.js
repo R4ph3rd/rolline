@@ -4,17 +4,18 @@ const userQueries = require('./user');
 const gamemodeQueries = require('./gamemodes');
 const templateQueries = require('./template');
 const helpers = require('../helpers/uploads');
+const { from } = require('../index');
 
 const getGames = async ({limit = 100, orderKey = 'creation_date', order = 'asc'} = {}) => {
     return await db.select().from('games').orderBy(orderKey, order).limit(limit);
 }
 
-const getGame = async (game_id) => {
-    let tags = await db.pluck('tag_id').from('tags_by_games').where('game_id', game_id.id);
+const getGame = async ({id}) => {
+    let tags = await db.pluck('tag_id').from('tags_by_games').where('game_id', id);
     return await Promise.all([
-        db.select().from('games').where('id', game_id.id),
+        db.select().from('games').where('id', id),
         db.pluck('label').from('tags').whereIn('id', tags),
-        db.select().from('users_by_games').where('game_id', game_id.id)
+        db.select().from('users_by_games').where('game_id', id)
     ]).then( responses => {
         // console.log(responses)
         return {
@@ -24,6 +25,30 @@ const getGame = async (game_id) => {
         }
     }) ;
 }
+
+const getGamesByTags = async ({tags, filterMode = false}) => { //filter on true : tag && tag // on false : tag || tag
+    return await db.pluck('id').from('tags').whereIn('label', tags).then (async tags_id => {
+            return await db.select().from('tags_by_games').whereIn('tag_id', tags_id).then(async games_tags => {
+                if (filterMode){
+                    console.log(games_tags, tags, filterMode)
+                    let filteredGames = games_tags.filter( raw => {
+                        return games_tags.map( g => g.game_id).includes(raw.game_id) // TODO : repérer lesrépétitinos pour vérifier si une game a tous les tags
+                    })
+
+                    console.log('filtered', filteredGames)
+        
+                    return {tags, filterMode}
+                } else {
+                return await db.select().from('games').whereIn('id', games_tags.map(g => g.game_id)).then( games => {
+                    games.forEach( async game => {
+                        console.log(await getGame({id: game.id}))
+                    })
+                    return games
+                })
+            }
+        })
+    })
+} 
 
 const createGame = async (query = {}) => {
     // console.log("QUERY :::::::::::::", query)
@@ -75,5 +100,6 @@ const createGame = async (query = {}) => {
 module.exports = {
     getGames,
     getGame,
-    createGame
+    createGame,
+    getGamesByTags
 }
