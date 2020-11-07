@@ -12,6 +12,7 @@
   "dependencies": {
     "@hapi/hapi": "^20.0.1",
     "dotenv": "^8.2.0",
+    "hapi-auth-jwt2": "^10.2.0",
     "knex": "^0.21.6",
     "mysql2": "^2.2.5"
   }
