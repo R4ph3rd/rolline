@@ -67,10 +67,11 @@ module.exports = [
                             isHttpOnly: true,    // prevent client alteration
                             clearInvalid: false, // remove invalid cookies
                             strictHeader: true   // don't allow violations of RFC 6265
-                        }
+                        };
                         let userToken = token.sign(query, process.env.SECRET_KEY);
-                        h.response().header("Authorization", userToken)
-                        .state("token", userToken, cookie_options);
+                        h.response()
+                            .header("Authorization", userToken)
+                            .state("token", userToken, cookie_options);
 
                         return {
                             statusCode : 200,

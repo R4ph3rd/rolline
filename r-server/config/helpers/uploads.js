@@ -31,14 +31,12 @@ module.exports =  {
                 console.log('!!! File too big !!!')
             }
         })
-        
-        
 
         file.on("end", (err) => {
             // return h.code(200);
             return fs.statSync(`${__dirname}/../../${dir}/${file.hapi.filename}`);
         });
 
-        return `${__dirname}/../../${dir}/${file.hapi.filename}`;
+        return `${__dirname}/../../${dir}/${file.hapi.filename}`; // TODO : tenter de virer ce return pour attendre la promesse 
     },
 }

@@ -16,7 +16,7 @@ const getAsset = async ({userID, assetID, label}) => {
 }
 
 const uploadAsset = async ({userID, file, label}) => {
-    let path = await helpers[0].uploadFile(file, `data/users/${userID}/${helpers[1].typeFinder(file.hapi.filename)}s/`); // TODO : changer l'accessibilité aux helpers pour éviter de sélectionner l'index du tbaleau formé par concat
+    let path = await helpers.uploads.uploadFile(file, `data/users/${userID}/${helpers.types.typeFinder(file.hapi.filename)}s/`);
     
     // TODO : get some metadatas as File size, durée du son, taille de l'image
     setTimeout( () => {
