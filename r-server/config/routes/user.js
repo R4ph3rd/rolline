@@ -69,7 +69,7 @@ module.exports = [
                             strictHeader: true   // don't allow violations of RFC 6265
                         }
                         let userToken = token.sign(query, process.env.SECRET_KEY);
-                        h.header("Authorization", userToken)
+                        h.response().header("Authorization", userToken)
                         .state("token", userToken, cookie_options);
 
                         return {
