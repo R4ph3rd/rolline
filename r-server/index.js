@@ -1,4 +1,5 @@
 require('dotenv').config();
+// require('dotenv').config({ path: __dirname+'../' })
 const Hapi = require('@hapi/hapi');
 const Jwt = require('hapi-auth-jwt2');
 const token = require('jsonwebtoken');
