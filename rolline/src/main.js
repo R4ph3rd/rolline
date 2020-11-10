@@ -6,6 +6,10 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+require('dotenv').config({ path: __dirname+'/../../.env' })
+
+console.log(process.env)
+
 new Vue({
   router,
   store,
