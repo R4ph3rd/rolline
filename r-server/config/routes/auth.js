@@ -42,6 +42,15 @@ module.exports = [
           return await rep.json();
         });
       console.log('my token !!!' , response)
+
+      let me = await fetch('https://discord.com/api/users/@me', {
+        method: 'GET',
+        headers: {
+          authorization: `${response.token_type} ${response.access_token}`,
+        }
+      }).then(rep => rep.json())
+
+      console.log("me : \n", me)
       // h.redirect(`/?token=${json.access_token})`
       return code;
     },
