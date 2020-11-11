@@ -6,7 +6,12 @@ module.exports = [
     method: "GET",
     path: "/auth/discord",
     handler: async (request, h) => {
-      return h.redirect('https://discordapp.com/api/oauth2/authorize?client_id=774651484314533888&scope=identify&response_type=code');
+      const data = {
+        client_id: process.env.DISCORD_CLIENT_ID,
+        redirect_uri: 'http://localhost:5051/auth/callback',
+        scope: 'identify', //%20[scope]%20[another_scope]
+      }
+      return h.redirect(`https://discord.com/api/oauth2/authorize?client_id=${data.client_id}&redirect_uri=${data.redirect_uri}&response_type=code&scope=${data.scope}`);
     },
   },
   {
@@ -16,17 +21,29 @@ module.exports = [
       if (!request.query.code) throw new Error('NoCodeProvided');
       const code = request.query.code;
       const creds = btoa(`${process.env.DISCORD_CLIENT_ID}:${process.env.DISCORD_CLIENT_SECRET}`);
-      const response = await fetch(`https://discord.com/api/oauth2/authorize?client_id=774651484314533888&redirect_uri=http%3A%2F%2Flocalhost%3A5051%2Fauth%2Fcallback&response_type=code&scope=identify%20messages.read%20rpc?grant_type=authorization_code&code=${code}`,
-      
+      const data = {
+        client_id: process.env.DISCORD_CLIENT_ID,
+        client_secret: process.env.DISCORD_CLIENT_SECRET,
+        grant_type: 'authorization_code',
+        redirect_uri: 'http://localhost:5051/auth/callback',
+        code: code,
+        scope: 'identify', //%20[scope]%20[another_scope]
+      }
+      const response = await fetch(`https://discord.com/api/oauth2/token`,  
         {
           method: 'POST',
+          body: new URLSearchParams(data),
           headers: {
-            Authorization: `Basic ${creds}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
           },
-        }).then (rep => console.log("rep : ", rep));
-      const json = await response.json();
-      console.log("json :",json)
-      return h.redirect(`/?token=${json.access_token}`);
+        }).then (async rep => {
+          /* console.log("rep : ", rep); 
+          console.log("rep json: ", json);  */
+          return await rep.json();
+        });
+      console.log('my token !!!' , response)
+      // h.redirect(`/?token=${json.access_token})`
+      return code;
     },
   }
 ]
