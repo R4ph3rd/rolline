@@ -3,9 +3,11 @@ require('dotenv').config({ path: __dirname+'/../.env' })
 const Hapi = require('@hapi/hapi');
 const Jwt = require('hapi-auth-jwt2');
 const token = require('jsonwebtoken');
-const auth = require('./config/auth');
+const auth = require('./mysql-config/auth');
 
-const routes = require('./config/routes')
+const routes = require('./mysql-config/routes')
+// const rethinkTables = require('./rethink-config/index')
+const rtGames = require('./rethink-config/queries/games')
 
 // bring your own validation function
 const validate = async function (decoded, request, h) {
@@ -41,6 +43,9 @@ const init = async () => {
     console.log('Server running on %s', server.info.uri)
 
     server.route(routes)
+
+    // rethinkTables(rethink);
+    rtGames.createGame({name: 'games'})
 }
 
 process.on('unhandledRejection', (err) => {

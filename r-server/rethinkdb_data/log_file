@@ -1,0 +1,35 @@
+2020-12-13T14:18:27.309391913 0.011186s notice: Recursively removing directory /home/r4ph3rd/Documents/rolline/r-server/rethinkdb_data/tmp
+2020-12-13T14:18:27.312343554 0.014139s notice: Initializing directory /home/r4ph3rd/Documents/rolline/r-server/rethinkdb_data
+2020-12-13T14:18:27.312435362 0.014229s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/home/r4ph3rd/Documents/rolline/r-server/rethinkdb_data' did not already exist or is empty.)
+2020-12-13T14:18:27.312456204 0.014250s notice: Running rethinkdb 2.4.1 (CLANG 9.0.1 (Red Hat 9.0.1-2.module_el8.2.0+309+0c7b6b03))...
+2020-12-13T14:18:27.314087487 0.015882s notice: Running on Linux 5.9.12-100.fc32.x86_64 x86_64
+2020-12-13T14:18:27.314120504 0.015915s notice: Loading data from directory /home/r4ph3rd/Documents/rolline/r-server/rethinkdb_data
+2020-12-13T14:18:27.334341307 0.036136s info: Automatically using cache size of 3674 MB
+2020-12-13T14:18:27.334881251 0.036675s notice: Listening for intracluster connections on port 29015
+2020-12-13T14:18:27.336260781 0.038055s notice: Listening for client driver connections on port 28015
+2020-12-13T14:18:27.336284206 0.038078s notice: Listening for administrative HTTP connections on port 8080
+2020-12-13T14:18:27.336286143 0.038080s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2020-12-13T14:18:27.336287788 0.038082s notice: Listening on driver addresses: 127.0.0.1, ::1
+2020-12-13T14:18:27.336289364 0.038083s notice: Listening on http addresses: 127.0.0.1, ::1
+2020-12-13T14:18:27.336290952 0.038085s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2020-12-13T14:18:27.336292636 0.038087s notice: Server ready, "r4ph3rd_03c" 3bcf52c2-4748-48af-a59d-18c1405b8b41
+2020-12-13T14:23:17.294360362 289.996155s info: Table 9dc3d359-c2ca-4ef2-9dfb-dd51e028a985: Starting a new Raft election for term 1.
+2020-12-13T14:23:17.294665750 289.996460s info: Table 9dc3d359-c2ca-4ef2-9dfb-dd51e028a985: Added replica on this server.
+2020-12-13T14:23:17.297342747 289.999138s info: Table 9dc3d359-c2ca-4ef2-9dfb-dd51e028a985: This server is Raft leader for term 1. Latest log index is 0.
+2021-01-31T18:49:15.926704601 0.042265s notice: Running rethinkdb 2.4.1 (CLANG 9.0.1 (Red Hat 9.0.1-2.module_el8.2.0+309+0c7b6b03))...
+2021-01-31T18:49:15.929460992 0.045020s notice: Running on Linux 5.10.8-100.fc32.x86_64 x86_64
+2021-01-31T18:49:15.929529314 0.045087s notice: Loading data from directory /home/r4ph3rd/Documents/rolline/r-server/rethinkdb_data
+2021-01-31T18:49:15.944943168 0.060501s info: Automatically using cache size of 4981 MB
+2021-01-31T18:49:15.947745284 0.063303s notice: Listening for intracluster connections on port 29015
+2021-01-31T18:49:15.973077320 0.088636s notice: Listening for client driver connections on port 28015
+2021-01-31T18:49:15.973142728 0.088701s notice: Listening for administrative HTTP connections on port 8080
+2021-01-31T18:49:15.973151132 0.088709s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2021-01-31T18:49:15.973153329 0.088711s notice: Listening on driver addresses: 127.0.0.1, ::1
+2021-01-31T18:49:15.973158941 0.088717s notice: Listening on http addresses: 127.0.0.1, ::1
+2021-01-31T18:49:15.973161858 0.088720s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2021-01-31T18:49:15.973167793 0.088726s notice: Server ready, "r4ph3rd_03c" 3bcf52c2-4748-48af-a59d-18c1405b8b41
+2021-01-31T18:49:17.856595708 1.972154s info: Table 9dc3d359-c2ca-4ef2-9dfb-dd51e028a985: Starting a new Raft election for term 2.
+2021-01-31T18:49:17.862311236 1.977869s info: Table 9dc3d359-c2ca-4ef2-9dfb-dd51e028a985: This server is Raft leader for term 2. Latest log index is 2.
+2021-01-31T19:08:28.875019996 1152.990578s info: Table 3f00aa7e-0237-47d4-9781-c30e2c8806ba: Starting a new Raft election for term 1.
+2021-01-31T19:08:28.875451476 1152.991009s info: Table 3f00aa7e-0237-47d4-9781-c30e2c8806ba: Added replica on this server.
+2021-01-31T19:08:28.878281302 1152.993840s info: Table 3f00aa7e-0237-47d4-9781-c30e2c8806ba: This server is Raft leader for term 1. Latest log index is 0.
