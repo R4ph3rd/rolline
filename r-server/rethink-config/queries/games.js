@@ -8,6 +8,7 @@ module.exports = {
         if(!game){
             r.db(process.env.RT_DB_NAME).table('games').insert({ // id column as automatically filled
                 name,
+                chat_id: undefined,
                 boards_id: [],
                 audios_id: [],
                 assets_id: []
@@ -16,5 +17,5 @@ module.exports = {
                 console.log(name + ' row created');
             })
         }
-    }
+    },
 }

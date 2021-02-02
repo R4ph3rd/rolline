@@ -29,6 +29,13 @@ const conn = rethink.connect({ host: 'localhost', port: process.env.RT_PORT || 2
             console.log('Chats table created');
         })
     }
+
+    // set secondary index for chats
+    if (await rethink.db(process.env.RT_DB_NAME).table('chats').indexList().contains('gameID').run(connection)){
+        console.log('Secondary index for chat already defined')
+    } else {
+        rethink.db(process.env.RT_DB_NAME).table('chats').indexCreate('gameID').run(connection);
+    }
 })
 
 
