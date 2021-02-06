@@ -24,3 +24,5 @@ pnpm-debug.log*
 # image folder
 data
 installrethink.sh
+rethink-config/rethinkdb-2.4.1
+rethinkdb_data

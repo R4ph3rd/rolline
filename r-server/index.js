@@ -45,7 +45,7 @@ const init = async () => {
     server.route(routes)
 
     // rethinkTables(rethink);
-    rtGames.createGame({name: 'games'})
+    rtGames.createGame({name: 'partie1'})
 }
 
 process.on('unhandledRejection', (err) => {

@@ -45,7 +45,7 @@ async function getLocalMediaStream(){
 		return localStream;
 	}
 
-	const stream = await navigator.mediaDevices.getUserMedia({video:true, audio: true});
+	const stream = await navigator.mediaDevices.getUserMedia({screen:true, audio: true});
 	localStream = stream;
 	return stream;
 }

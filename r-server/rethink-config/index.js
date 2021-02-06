@@ -1,3 +1,5 @@
+require('dotenv').config({ path: __dirname + '/../../.env' })
+
 const rethink = require('rethinkdb');
 const conn = rethink.connect({ host: 'localhost', port: process.env.RT_PORT || 28015 }, async function(error, connection){
     // initialization DB
