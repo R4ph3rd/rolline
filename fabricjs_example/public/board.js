@@ -13,7 +13,7 @@ board.add(new fabric.Circle({ radius: 30, fill: '#f55', top: 100, left: 100 }));
 
 let initialPos, bounds, rect, dragging = false, freeDrawing = false
 const options = {
-    drawRect: false,
+    drawRect: true,
     onlyOne: false,
     rectProps: {
         stroke: 'red', 
