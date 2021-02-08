@@ -9,10 +9,17 @@
 <body>
     
     <canvas id="board"></canvas>
+
+    <div id="controls">
+        <button onclick="toggleDraw()" id="drawing">Draw</button>
+        <button onclick="toggleShape()" id="shaping">Shape</button>
+    </div>
     
 </body>
 
 <script src="./fabric/fabric.js"></script>
 <script src="responsiveCanvas.js"></script>
 <script src="board.js"></script>
+<script src="drag-drop.js"></script>
+<script src="controls.js"></script>
 </html>
