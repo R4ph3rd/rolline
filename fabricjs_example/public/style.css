@@ -1,0 +1,14 @@
+*{
+    box-sizing:border-box;
+    padding:0;
+    margin:0;
+}
+
+body{
+    background: #F7F7F7;
+}
+
+.canvas-container{
+    width:100vw !important;
+    height:100vh !important;
+}
