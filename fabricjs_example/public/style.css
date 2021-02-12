@@ -35,3 +35,28 @@ buttons{
 .active{
     background-color: gray;
 }
+
+.hidden{
+    visibility: hidden;
+}
+
+#controls-modals{
+    position: fixed;
+    top:20px;
+    left:150px;
+    padding:10px;
+    border:1px solid black;
+    background:white;
+    box-shadow: 0 0 9px rgba(0,0,0, .12);
+
+    display:grid;
+    grid-auto-rows: auto;
+    grid-auto-flow: row;
+    grid-row-gap:8px;
+}
+
+#colorWheel{
+    width:60px;
+    height:30px;
+    background:red;
+}

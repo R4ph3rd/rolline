@@ -15,6 +15,27 @@
         <button onclick="toggleDraw()" id="drawing">Draw</button>
         <button onclick="toggleShape()" id="shaping">Shape</button>
     </div>
+
+    <div id="controls-modals" class="hidden">
+        <label for="drawing-color">Color</label>
+        <input type="color" value="000000" id="drawing-color">
+
+        <label for="line-width">Line width</label>
+        <input id="line-width" type="range" value="10" min="1" max="100">
+
+        <div>
+            <label for="drawing-mode">Mode</label>
+            <select id="drawing-mode">
+                <option value="Pencil">Pencil</option>
+                <option value="Circle">Circle</option>
+                <option value="Spray">Spray</option>
+                <option value="Pattern">Pattern</option>
+                <option value="hLine">hLine</option>
+                <option value="vLine">vLine</option>
+                <option value="Square">Square</option>
+            </select>
+        </div>
+    </div>
     
 </body>
 
@@ -23,5 +44,6 @@
 <script src="board.js"></script>
 <script src="drag-drop.js"></script>
 <script src="drawingShapes.js"></script>
+<script src="brush.js"></script>
 <script src="controls.js"></script>
 </html>

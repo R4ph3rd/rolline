@@ -4,4 +4,4 @@ const board = new fabric.Canvas('board', {
 });
 
 // responsiveboard();
-board.add(new fabric.Circle({ radius: 30, fill: '#f55', top: 100, left: 100 }));
+board.add(new fabric.Circle({ radius: 30, fill: '#f55', top: 300, left: 300 }));
