@@ -41,11 +41,16 @@ function clearCanvasOptions(option){
         console.log('drawing mode', board.isDrawingMode)
     }
 
+
+    // SETTINGS MODAL DISPLAY
+
+    document.getElementById('controls-modals-draw').classList.add('hidden');
+    document.getElementById('controls-modals-shapes').classList.add('hidden');
+
     if (board.isDrawingMode){
-        document.getElementById('controls-modals').classList.remove('hidden')
-    } else {
-        console.log('coool')
-        document.getElementById('controls-modals').classList.add('hidden')
+        document.getElementById('controls-modals-draw').classList.remove('hidden')
+    } else if (freeDrawing){
+        document.getElementById('controls-modals-shapes').classList.remove('hidden')
     }
 }
 
@@ -74,6 +79,8 @@ const fillBrushType = (name = document.getElementById('drawing-mode').value) => 
 
 /* EVENT LISTENERS */
 
+////// DRAW SETTINGS
+
 document.getElementById('drawing-color').addEventListener('change', e => {
     board.freeDrawingBrush.color = e.target.value;
 
@@ -91,4 +98,16 @@ document.getElementById('drawing-mode').addEventListener('change', (e) => {
     
     fillBrushType();
     setBrush(e.target.value);
+})
+
+//////// SHAPES SETTINGS
+document.getElementById('fill-color').addEventListener('change', e => {
+    shapeOptions.rectProps.fill = e.target.value;
+})
+document.getElementById('stroke-color').addEventListener('change', e => {
+    shapeOptions.rectProps.stroke = e.target.value;
+})
+document.getElementById('stroke-width').addEventListener('change', e => {
+    shapeOptions.rectProps.strokeWidth = parseInt(e.target.value);
+    console.log(parseInt(e.target.value), shapeOptions.rectProps)
 })

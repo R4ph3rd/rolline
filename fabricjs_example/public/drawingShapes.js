@@ -9,9 +9,9 @@ let shapeOptions = {
     initialPos : {},
     bounds: {},
     rectProps: {
-        stroke: 'red', 
-        strokeWidth: 1, 
-        fill: 'blue'
+        stroke: document.getElementById('stroke-color').value, 
+        strokeWidth: parseInt(document.getElementById('stroke-width').value), 
+        fill: document.getElementById('fill-color').value
     }
 }
 

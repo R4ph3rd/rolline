@@ -16,7 +16,7 @@
         <button onclick="toggleShape()" id="shaping">Shape</button>
     </div>
 
-    <div id="controls-modals" class="hidden">
+    <div id="controls-modals-draw" class="controlsModals hidden">
         <label for="drawing-color">Color</label>
         <input type="color" value="000000" id="drawing-color">
 
@@ -35,6 +35,17 @@
                 <option value="Square">Square</option>
             </select>
         </div>
+    </div>
+    
+    <div id="controls-modals-shapes" class="controlsModals hidden">
+        <label for="fill-color">Fill</label>
+        <input type="color" value="000000" id="fill-color">
+        
+        <label for="stroke-color">Stroke</label>
+        <input type="color" value="FFFFF00" id="stroke-color">
+
+        <label for="stroke-width">Stroke width</label>
+        <input id="stroke-width" type="range" value="1" min="1" max="100">
     </div>
     
 </body>
