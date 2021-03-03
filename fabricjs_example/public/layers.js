@@ -11,7 +11,7 @@ const layers = {
 function insertIntoLayer(e){
     console.log('insert object to layer', e.target)
 
-    // layers[layers.active].add(e.target);
+    layers[layers.active].add(e.target);
 
 }
 
