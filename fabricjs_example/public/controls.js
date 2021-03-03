@@ -21,6 +21,8 @@ function setBrush(){
 function toggleShape(){
     freeDrawing = !freeDrawing;
     clearCanvasOptions('shaping');
+    
+    board.selection = !board.selection;
 
     console.log(`Drawing shapes mode ${freeDrawing ? 'enabled' : 'disabled'}`)
 }
@@ -78,6 +80,14 @@ const fillBrushType = (name = document.getElementById('drawing-mode').value) => 
 
 
 /* EVENT LISTENERS */
+
+////// LAYERS
+
+document.getElementById('layers').addEventListener('change', (e) => {
+    console.log(e.target.value)
+    
+    setActiveLayer(e.target.value);
+})
 
 ////// DRAW SETTINGS
 

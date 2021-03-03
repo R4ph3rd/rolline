@@ -12,8 +12,17 @@
 
     <div id="controls">
         <button onclick="toggleSelector()" id="selector" class="active" checked>Select</button>
-        <button onclick="toggleDraw()" id="drawing">Draw</button>
         <button onclick="toggleShape()" id="shaping">Shape</button>
+        <button onclick="toggleDraw()" id="drawing">Draw</button>
+        
+        <div>
+            <label for="layers">Layers</label>
+            <select id="layers">
+                <option value="Movables">Movables</option>
+                <option value="Backgrounds">Backgrounds</option>
+                <option value="Hidden">Hidden</option>
+            </select>
+        </div>
     </div>
 
     <div id="controls-modals-draw" class="controlsModals hidden">
@@ -58,4 +67,5 @@
 <script src="brush.js"></script>
 <script src="controls.js"></script>
 <script src="shortcuts.js"></script>
+<script src="layers.js"></script>
 </html>
