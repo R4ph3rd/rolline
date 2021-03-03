@@ -17,11 +17,32 @@ addEventListener('keydown', function(e){
         board.discardActiveObject().renderAll()
         console.log('object(s) deleted');
 
-    } else if (e.ctrlKey && e.key == 'g'){
-        if (!board.getActiveObject()) return;
-        if (board.getActiveObject().type !== 'activeSelection') return;
+    } else if (e.keyCode == 71){ // Ctrl + g
+        console.log(e.shiftKey)
+        if (e.ctrlKey && e.shiftKey){
+            console.log('ungroup')
+            if (!board.getActiveObject()) return;
+            if (board.getActiveObject().type !== 'group') return;
+            
+            board.getActiveObject().toActiveSelection();
+            board.requestRenderAll();
+        } else if (e.ctrlKey){
+            console.log('group')
+            if (!board.getActiveObject()) return;
+            if (board.getActiveObject().type !== 'activeSelection') return;
 
-        board.getActiveObject().toGroup();
+            board.getActiveObject().toGroup();
+            board.requestRenderAll();
+        }
+    } else if (e.keyCode == 65 && e.ctrlKey){ // Ctrl + a
+        console.log('select all')
+        board.discardActiveObject();
+        var sel = new fabric.ActiveSelection(board.getObjects(), {
+          board: board,
+        });
+        board.setActiveObject(sel);
         board.requestRenderAll();
+
+        e.preventDefault();
     }
 })
