@@ -2,17 +2,15 @@ board.on('object:added', insertIntoLayer);
 board.on('path:created', insertIntoLayer);
 
 const layers = {
-    active: 'movables',
+    active: document.getElementById('layers').value.toLowerCase(),
     movables: new fabric.Group(),
     backgrounds: new fabric.Group(),
     hidden: new fabric.Group()
 };
 
 function insertIntoLayer(e){
-    console.log('insert object to layer', e.target)
-
-    layers[layers.active].addWithUpdate(e.target);
-
+    layers[layers.active].add(e.target);
+    console.log('insert object to layer ' + layers.active, layers[layers.active])
 }
 
 function setActiveLayer(layer){
@@ -23,8 +21,8 @@ function setActiveLayer(layer){
 
         for (let group in layers){
             if (group != layers.active && group != 'active'){
-                layers[group].selectable = false;
-                console.log('group', layers[group])
+                // layers[group].selectable = false;
+                console.log('group ' + group, layers[group])
             }
         }
 
