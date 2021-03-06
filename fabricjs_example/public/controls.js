@@ -1,38 +1,3 @@
-function toggleSelector(){
-    clearCanvasOptions('selector');
-    console.log('Selector mode enabled')
-}
-
-function toggleDraw(){
-    board.isDrawingMode = !board.isDrawingMode;
-    clearCanvasOptions('drawing');
-    
-    console.log(`Drawing mode ${board.isDrawingMode ? 'enabled' : 'disabled'}`);
-
-    if (board.freeDrawingBrush) {
-        if (board.freeDrawingBrush.getPatternSrc) {
-            board.freeDrawingBrush.source = board.freeDrawingBrush.getPatternSrc.call(brush);
-        }
-        setBrush();
-    }
-}
-
-function toggleShape(){
-    freeDrawing = !freeDrawing;
-    clearCanvasOptions('shaping');
-    
-    board.selection = !board.selection;
-
-    console.log(`Drawing shapes mode ${freeDrawing ? 'enabled' : 'disabled'}`)
-    console.log(`Is board selectable ? ${board.selection}`)
-}
-
-function setBrush(){
-    board.freeDrawingBrush.width = document.getElementById('line-width').value || 1;
-    board.freeDrawingBrush.color = document.getElementById('drawing-color').value || '#000000';
-    fillBrushType();
-}
-
 function selectCanvasMode(option){
     freeDrawing = option == 'shaping';
     board.isDrawingMode = option == 'drawing';
@@ -67,7 +32,14 @@ function updateCanvasOptions(option){
 }
 
 
-////////
+//////// BRUSH
+
+function setBrush(){
+    board.freeDrawingBrush.width = document.getElementById('line-width').value || 1;
+    board.freeDrawingBrush.color = document.getElementById('drawing-color').value || '#000000';
+    fillBrushType();
+}
+
 const fillBrushType = (name = document.getElementById('drawing-mode').value) => {
     switch (name){
         case 'hLine':
