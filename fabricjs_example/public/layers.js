@@ -8,11 +8,21 @@ const layers = {
     hidden: new fabric.Group()
 };
 
-function insertIntoLayer(e){
-    if (!this.canvas) {
-        return;
+for (let group in layers){
+    if (group != 'active'){
+        layers[group].toObject = function(){
+            return {name: group};
+        }
+        layers[group].name = group;
+        board.add(layers[group]);
+        console.log(layers[group], JSON.stringify(board))
     }
+}
+
+function insertIntoLayer(e){
     console.log(e.target, board)
+    if (!this.canvas) return;
+    
     layers[layers.active].add(e.target);
     console.log('insert object to layer ' + layers.active, layers[layers.active])
 }
