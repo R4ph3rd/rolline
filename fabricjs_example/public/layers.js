@@ -20,6 +20,7 @@ for (let group in layers){
 }
 
 function insertIntoLayer(e){
+    board.setActiveObject(e.target);
     console.log(e.target, board)
     if (!this.canvas) return;
     
