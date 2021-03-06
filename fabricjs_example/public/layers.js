@@ -27,8 +27,8 @@ function setActiveLayer(layer){
     
             for (let group in layers){
                 if (group != layers.active && group != 'active'){
-                    // layers[group].selectable = false;
-                    console.log('group ' + group, layers[group])
+                    layers[group].selectable = false;
+                    console.log('group unselectable : ' + group, layers[group])
                 }
             }
     

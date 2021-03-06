@@ -1,3 +1,8 @@
+function toggleSelector(){
+    clearCanvasOptions('selector');
+    console.log('Selector mode enabled')
+}
+
 function toggleDraw(){
     board.isDrawingMode = !board.isDrawingMode;
     clearCanvasOptions('drawing');
@@ -12,12 +17,6 @@ function toggleDraw(){
     }
 }
 
-function setBrush(){
-    board.freeDrawingBrush.width = document.getElementById('line-width').value || 1;
-    board.freeDrawingBrush.color = document.getElementById('drawing-color').value || '#000000';
-    fillBrushType();
-}
-
 function toggleShape(){
     freeDrawing = !freeDrawing;
     clearCanvasOptions('shaping');
@@ -25,24 +24,35 @@ function toggleShape(){
     board.selection = !board.selection;
 
     console.log(`Drawing shapes mode ${freeDrawing ? 'enabled' : 'disabled'}`)
-}
-function toggleSelector(){
-    clearCanvasOptions('selector');
-    console.log('Selector mode enabled')
+    console.log(`Is board selectable ? ${board.selection}`)
 }
 
-function clearCanvasOptions(option){
-    Array.from(document.getElementById('controls').children).forEach(control => control.classList.remove('active'));
-    document.getElementById(option).classList.toggle('active');
+function setBrush(){
+    board.freeDrawingBrush.width = document.getElementById('line-width').value || 1;
+    board.freeDrawingBrush.color = document.getElementById('drawing-color').value || '#000000';
+    fillBrushType();
+}
 
-    if (option != 'shaping'){
-        freeDrawing = false;
-    } 
-    if (option != 'drawing'){
-        board.isDrawingMode = false;
-        console.log('drawing mode', board.isDrawingMode)
+function selectCanvasMode(option){
+    freeDrawing = option == 'shaping';
+    board.isDrawingMode = option == 'drawing';
+
+    if (board.isDrawingMode && board.freeDrawingBrush) {
+        if (board.freeDrawingBrush.getPatternSrc) {
+            board.freeDrawingBrush.source = board.freeDrawingBrush.getPatternSrc.call(brush);
+        }
+        setBrush();
     }
 
+    board.selection = option == 'selector';
+
+    console.log('Canvas mode is now ', option)
+    updateCanvasOptions(option);
+}
+
+function updateCanvasOptions(option){
+    Array.from(document.getElementById('controls').children).forEach(control => control.classList.remove('active'));
+    document.getElementById(option).classList.toggle('active');
 
     // SETTINGS MODAL DISPLAY
 
@@ -83,9 +93,7 @@ const fillBrushType = (name = document.getElementById('drawing-mode').value) => 
 
 ////// LAYERS
 
-document.getElementById('layers').addEventListener('change', (e) => {
-    console.log(e.target.value)
-    
+document.getElementById('layers').addEventListener('change', (e) => {    
     setActiveLayer(e.target.value);
 })
 
