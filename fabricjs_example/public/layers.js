@@ -3,28 +3,28 @@ board.on('path:created', insertIntoLayer);
 
 const layers = {
     active: document.getElementById('layers').value.toLowerCase(),
-    movables: new fabric.Group(),
-    backgrounds: new fabric.Group(),
-    hidden: new fabric.Group()
+    movables: [],
+    backgrounds: [],
+    hidden: []
 };
 
-for (let group in layers){
-    if (group != 'active'){
-        layers[group].toObject = function(){
-            return {name: group};
-        }
-        layers[group].name = group;
-        board.add(layers[group]);
-        console.log(layers[group], JSON.stringify(board))
-    }
-}
+// for (let group in layers){
+//     if (group != 'active'){
+//         layers[group].toObject = function(){
+//             return {name: group};
+//         }
+//         layers[group].name = group;
+//         board.add(layers[group]);
+//         console.log(layers[group], JSON.stringify(board))
+//     }
+// }
 
 function insertIntoLayer(e){
     board.setActiveObject(e.target);
     console.log(e.target, board)
-    if (!this.canvas) return;
+    // if (!this.canvas) return;
     
-    layers[layers.active].add(e.target);
+    layers[layers.active].push(e.target);
     console.log('insert object to layer ' + layers.active, layers[layers.active])
 }
 
@@ -38,12 +38,17 @@ function setActiveLayer(layer){
     
             for (let group in layers){
                 if (group != layers.active && group != 'active'){
-                    layers[group].selectable = false;
+                    // layers[group].selectable = false;
+                    for (let object of layers[group]){
+                        object.selectable = false;
+                    }
                     console.log('group unselectable : ' + group, layers[group])
                 }
             }
     
-            layers[layers.active].selectable = true;
+            layers[layers.active].forEach(object => {
+                object.selectable = true;  
+            });
         }
     } else {
         console.warn('No active layer selected.')
