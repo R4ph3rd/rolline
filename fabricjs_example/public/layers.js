@@ -45,6 +45,7 @@ function setActiveLayer(layer){
             for (let group in layers){
                 if (group != layers.active && group != 'active'){
                     for (let object of layers[group]){
+                        object.set('opacity', .5);
                         object.selectable = false;
                     }
                     console.log('group unselectable : ' + group, layers[group])
@@ -52,6 +53,7 @@ function setActiveLayer(layer){
             }
     
             layers[layers.active].forEach(object => {
+                object.set('opacity', .5);
                 object.selectable = true;  
             });
         }

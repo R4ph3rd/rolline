@@ -1,5 +1,5 @@
 
-///// ZOOM
+///// ZOOM // TODO : manage in a better way interaction with touchpad
 board.on('mouse:wheel', function(opt) {
     var delta = opt.e.deltaY;
     var zoom = board.getZoom();
