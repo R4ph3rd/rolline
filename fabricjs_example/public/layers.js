@@ -1,8 +1,3 @@
-board.on('object:added', insertIntoLayer);
-board.on('path:created', insertIntoLayer);
-board.on('object:removed', removeObjectInLayer);
-board.on('path:removed', removeObjectInLayer);
-
 // Not integrated to fabric.Canvas object, so we have to store it also when serialized canvas to DB
 const layers = {
     active: document.getElementById('layers').value.toLowerCase(),

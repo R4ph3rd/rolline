@@ -1,6 +1,7 @@
 function selectCanvasMode(option){
     freeDrawing = option == 'shaping';
     board.isDrawingMode = option == 'drawing';
+    texting = option == 'texting';
 
     if (board.isDrawingMode && board.freeDrawingBrush) {
         if (board.freeDrawingBrush.getPatternSrc) {

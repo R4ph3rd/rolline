@@ -1,7 +1,3 @@
-board.on('mouse:down', onMouseDown);
-board.on('mouse:move', onMouseMove);
-board.on('mouse:up', onMouseUp);
-
 let dragging = false, freeDrawing = false
 let shapeOptions = {
     shapeType: 'rect',
