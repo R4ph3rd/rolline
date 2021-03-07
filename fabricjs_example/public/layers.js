@@ -1,6 +1,9 @@
 board.on('object:added', insertIntoLayer);
 board.on('path:created', insertIntoLayer);
+board.on('object:removed', removeObjectInLayer);
+board.on('path:removed', removeObjectInLayer);
 
+// Not integrated to fabric.Canvas object, so we have to store it also when serialized canvas to DB
 const layers = {
     active: document.getElementById('layers').value.toLowerCase(),
     movables: [],
@@ -8,21 +11,24 @@ const layers = {
     hidden: []
 };
 
-// for (let group in layers){
-//     if (group != 'active'){
-//         layers[group].toObject = function(){
-//             return {name: group};
-//         }
-//         layers[group].name = group;
-//         board.add(layers[group]);
-//         console.log(layers[group], JSON.stringify(board))
-//     }
-// }
+function removeObjectInLayer(e){
+    console.log(e.target)
+    const layer = Object.keys(layers).find(l => {
+        console.log(l, layers[l] == e.target)
+        return typeof l != 'string' && layers[l].includes(e.target)
+    });
+    
+    console.log(layer)
+    const i = layers[layer].findIndex(object => object == e.target);
+
+    layers[layer].splice(i, 1);
+
+    console.log('Object removed from ', layer, ' layer at index ', i);
+}
 
 function insertIntoLayer(e){
     board.setActiveObject(e.target);
-    console.log(e.target, board)
-    // if (!this.canvas) return;
+    console.log('New object : ', e.target)
     
     layers[layers.active].push(e.target);
     console.log('insert object to layer ' + layers.active, layers[layers.active])
@@ -38,7 +44,6 @@ function setActiveLayer(layer){
     
             for (let group in layers){
                 if (group != layers.active && group != 'active'){
-                    // layers[group].selectable = false;
                     for (let object of layers[group]){
                         object.selectable = false;
                     }
