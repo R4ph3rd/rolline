@@ -1,5 +1,18 @@
 
+///// ZOOM
+board.on('mouse:wheel', function(opt) {
+    var delta = opt.e.deltaY;
+    var zoom = board.getZoom();
+    zoom *= 0.999 ** delta;
+    if (zoom > 20) zoom = 20;
+    if (zoom < 0.01) zoom = 0.01;
+    board.setZoom(zoom);
+    opt.e.preventDefault();
+    opt.e.stopPropagation();
+})
+      
 
+/////// PAN : alt + g
 board.on('mouse:down', function(opt) {
     var evt = opt.e;
     if (evt.altKey === true) {
