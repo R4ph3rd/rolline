@@ -1,6 +1,8 @@
+let clearingFog = false;
+
 function resetFog(){
     let fog = new fabric.Circle({
-        radius: window.innerWidth > window.innerHeight ? window.innerWidth * 1 : window.innerHeight * 1,
+        radius: window.innerWidth > window.innerHeight ? window.innerWidth * 10 : window.innerHeight * 10,
         top : 0,
         left: 0,
         fill: '#00000050',

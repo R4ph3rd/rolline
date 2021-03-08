@@ -1,18 +1,14 @@
 function selectCanvasMode(option){
-    freeDrawing = option == 'shaping';
-    board.isDrawingMode = ['drawing','erasing'].includes(option);
+    drawingShapes = ['shaping', 'clearingFog'].includes(option);
+    board.isDrawingMode = option == 'drawing';
     texting = option == 'texting';
-    erasing = option == 'erasing';
+    clearingFog = option == 'clearingFog';
 
-    if (option == 'drawing' && board.freeDrawingBrush) {
+    if (board.isDrawingMode && board.freeDrawingBrush) {
         if (board.freeDrawingBrush.getPatternSrc) {
             board.freeDrawingBrush.source = board.freeDrawingBrush.getPatternSrc.call(brush);
         }
         setBrush();
-    }
-
-    if (erasing){
-        erase();
     }
 
     board.selection = option == 'selector';
@@ -32,7 +28,7 @@ function updateCanvasOptions(option){
 
     if (board.isDrawingMode){
         document.getElementById('controls-modals-draw').classList.remove('hidden')
-    } else if (freeDrawing){
+    } else if (drawingShapes){
         document.getElementById('controls-modals-shapes').classList.remove('hidden')
     }
 }

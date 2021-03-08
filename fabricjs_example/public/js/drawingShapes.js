@@ -1,4 +1,4 @@
-let dragging = false, freeDrawing = false
+let dragging = false, drawingShapes = false
 let shapeOptions = {
     shapeType: 'rect',
     shape: {},
@@ -14,7 +14,7 @@ let shapeOptions = {
     
 function onMouseDown(e) {
     dragging = true;
-    if (!freeDrawing) return;
+    if (!drawingShapes) return;
 
     shapeOptions.initialPos = { ...e.pointer }
     shapeOptions.bounds = {};
@@ -58,15 +58,33 @@ function update(pointer) {
 }
 
 function onMouseMove(e) {
-    if (!dragging || !freeDrawing) return
+    if (!dragging || !drawingShapes) return
     requestAnimationFrame(() => update(e.pointer))
 }
 
 function onMouseUp(e) {
     dragging = false;
-    if (!freeDrawing) {return}
-    if (shapeOptions.shapeType == 'rect' && shapeOptions.shape && (shapeOptions.shape.width == 0 || shapeOptions.shape.height === 0)) {
-        board.remove(shapeOptions.shape)
+    if (!drawingShapes) {return}
+
+    if (clearingFog){
+      board.getItemsByName('FogOfWar').forEach(fog => {
+        let mask ;
+        if (fog.clipPath){
+          mask = new fabric.Group([fog.clipPath, e.target]);
+        } else {
+          mask = new fabric.Group([e.target]);
+        }
+        mask.inverted = true;
+        fog.dirty = true;
+        fog.clipPath = mask;
+        board.remove(shapeOptions.shape);
+      })
+      console.log(board.getItemsByName('FogOfWar'))
+      board.renderAll()
+    } else {
+      if (shapeOptions.shapeType == 'rect' && shapeOptions.shape && (shapeOptions.shape.width == 0 || shapeOptions.shape.height === 0)) {
+          board.remove(shapeOptions.shape)
+      }
     }
     
     shapeOptions.shape = {};

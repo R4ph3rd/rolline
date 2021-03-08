@@ -1,7 +1,6 @@
 let texting = false;
 
 function writeText(options) {
-    console.log('cool')
     if (texting && options.target == null) {
         addText(options.e);
     }

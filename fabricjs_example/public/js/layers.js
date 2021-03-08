@@ -12,13 +12,16 @@ function removeObjectInLayer(e){
             console.log(l, layers[l] == e.target)
             return typeof l != 'string' && layers[l].includes(e.target)
         });
+
+        if (layer){
+            console.log(layer)
+            const i = layers[layer].findIndex(object => object == e.target);
+    
+            layers[layer].splice(i, 1);
+    
+            console.log('Object removed from ', layer, ' layer at index ', i);
+        }
         
-        console.log(layer)
-        const i = layers[layer].findIndex(object => object == e.target);
-
-        layers[layer].splice(i, 1);
-
-        console.log('Object removed from ', layer, ' layer at index ', i);
     }
 }
 
