@@ -48,9 +48,12 @@ function setActiveLayer(layer){
             }
     
             layers[layers.active].forEach(object => {
-                object.set('opacity', .5);
+                console.log('object:', object)
+                object.set('opacity', 1);
                 object.selectable = true;  
             });
+
+            board.renderAll();
         }
     } else {
         console.warn('No active layer selected.')

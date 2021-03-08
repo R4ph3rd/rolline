@@ -1,13 +1,18 @@
 function selectCanvasMode(option){
     freeDrawing = option == 'shaping';
-    board.isDrawingMode = option == 'drawing';
+    board.isDrawingMode = ['drawing','erasing'].includes(option);
     texting = option == 'texting';
+    erasing = option == 'erasing';
 
-    if (board.isDrawingMode && board.freeDrawingBrush) {
+    if (option == 'drawing' && board.freeDrawingBrush) {
         if (board.freeDrawingBrush.getPatternSrc) {
             board.freeDrawingBrush.source = board.freeDrawingBrush.getPatternSrc.call(brush);
         }
         setBrush();
+    }
+
+    if (erasing){
+        erase();
     }
 
     board.selection = option == 'selector';

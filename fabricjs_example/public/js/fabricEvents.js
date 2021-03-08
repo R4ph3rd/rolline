@@ -11,3 +11,4 @@ board.on('mouse:down', startPan);
 board.on('mouse:move', pan);
 board.on('mouse:up', endPan);
 board.on('mouse:down', writeText);
+board.on('mouse:up', clipEraserPath);
