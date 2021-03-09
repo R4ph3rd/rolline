@@ -66,21 +66,9 @@ function onMouseUp(e) {
     dragging = false;
     if (!drawingShapes) {return}
 
+    // TODO : give right position of clearing rectangles
     if (clearingFog){
-      board.getItemsByName('FogOfWar').forEach(fog => {
-        let mask ;
-        if (fog.clipPath){
-          mask = new fabric.Group([fog.clipPath, e.target]);
-        } else {
-          mask = new fabric.Group([e.target]);
-        }
-        mask.inverted = true;
-        fog.dirty = true;
-        fog.clipPath = mask;
-        board.remove(shapeOptions.shape);
-      })
-      console.log(board.getItemsByName('FogOfWar'))
-      board.renderAll()
+      clipFog(e);
     } else {
       if (shapeOptions.shapeType == 'rect' && shapeOptions.shape && (shapeOptions.shape.width == 0 || shapeOptions.shape.height === 0)) {
           board.remove(shapeOptions.shape)

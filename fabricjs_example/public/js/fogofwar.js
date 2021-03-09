@@ -19,6 +19,23 @@ function resetFog(){
 
     board.add(fog);
     board.renderAll();
-    fog.center();
+    fog.center().setCoords();
     console.log(board.getItemsByName('FogOfWar'));
+}
+
+function clipFog(e){
+    board.getItemsByName('FogOfWar').forEach(fog => {
+        let mask ;
+        if (fog.clipPath){
+          mask = new fabric.Group([fog.clipPath, e.target]);
+        } else {
+          mask = new fabric.Group([e.target]);
+        }
+        mask.inverted = true;
+        fog.dirty = true;
+        fog.clipPath = mask;
+        board.remove(shapeOptions.shape);
+    })
+    console.log(board.getItemsByName('FogOfWar'))
+    board.renderAll();
 }
