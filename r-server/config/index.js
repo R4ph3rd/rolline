@@ -8,7 +8,6 @@ const knex =  require('knex')({
     }
 })
 
-console.log(process.env.DB_USER, process.env.DB_PASSWORD)
 knex.raw('select 1+1 as result').then(function () {
     // there is a valid connection in the pool
     console.log('knex is connected to DB');
@@ -17,9 +16,5 @@ knex.raw('select 1+1 as result').then(function () {
       console.log(err);
       throw err;
 });
-
-
-// user: 'rolline_api',
-// password: '32158960ttt',
 
 module.exports = knex ;
